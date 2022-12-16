@@ -8,8 +8,7 @@ using System.Net.Sockets;
 namespace quiz_food_drinks.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
-[ApiExplorerSettings(GroupName = "v1")]
+[Route("api/[controller]")]
 
 public class TriviaController : ControllerBase
 {
@@ -20,25 +19,24 @@ public class TriviaController : ControllerBase
         _triviaRepository = triviaRepository;
     }
 
-
-
+    
     [HttpGet]
-    public async Task<IActionResult> Get() 
+    public async Task<IActionResult> GetTrivia() 
     {
-        var triviaQuestion = await _triviaRepository.GetTriviaQuestion();
+        var triviaQuestion = await _triviaRepository.GetTriviaQuiz();
         var answersList = new List<string>();
         Random rand = new Random();
-        answersList.Add(triviaQuestion.correctAnswer);
+        answersList.Add(triviaQuestion.CorrectAnswer);
         
         Console.WriteLine("TRIVIA API");
-        Console.WriteLine(triviaQuestion.question);
+        Console.WriteLine(triviaQuestion.Question);
         
-        triviaQuestion.incorrectAnswers.ForEach(i => answersList.Add(i));
+        triviaQuestion.IncorrectAnswers.ForEach(i => answersList.Add(i));
         var shuffledList = answersList.OrderBy(_ => rand.Next()).ToList();
 
         foreach (var answer in shuffledList)
         {
-            if (answer == triviaQuestion.correctAnswer)
+            if (answer == triviaQuestion.CorrectAnswer)
             {
                 Console.WriteLine($"{answer}(correct)");
             }

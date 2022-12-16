@@ -6,7 +6,7 @@ namespace quiz_food_drinks.Contexts.Trivia.Repositories;
 
 public class TriviaRepository : ITriviaRepository
 {
-    public async Task<TriviaQuestion> GetTriviaQuestion()
+    public async Task<TriviaModel> GetTriviaQuiz()
     {
         var uri = "https://the-trivia-api.com/api/questions?categories=food_and_drink&limit=20&region=SE&difficulty=medium";
 
@@ -16,8 +16,8 @@ public class TriviaRepository : ITriviaRepository
 
         var stream = await response.Content.ReadAsStreamAsync();
 
-        var triviaQuestion = await JsonSerializer.DeserializeAsync<List<TriviaQuestion>>(stream);
+        var triviaModel = await JsonSerializer.DeserializeAsync<List<TriviaModel>>(stream);
 
-       return triviaQuestion[0];
+       return triviaModel[0];
     }
 }
