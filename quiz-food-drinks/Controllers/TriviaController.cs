@@ -45,6 +45,7 @@ public class TriviaController : ControllerBase
             else
             {
                 Console.WriteLine(answer);
+                
             }
         }
         
