@@ -15,14 +15,16 @@ internal class QuestionRepository : IQuestionRepository
         _context = context;
     }
 
-    public List<Question> GetQuestions()
+    public async Task<List<Question>> GetQuestions()
     {
-        return _context.Questions.ToList();
+        return await _context.Questions.ToListAsync();
     }
 
-    public Question? Get(Guid Id)
+    public async Task<Question?> Get(Guid id)
     {
-        throw new NotImplementedException();
+        return _context.Questions
+            .Where(x => x.Id == id)
+            .FirstOrDefault();
     }
     
     public async Task<Question> AddAsync(Question question)
@@ -37,8 +39,35 @@ internal class QuestionRepository : IQuestionRepository
         throw new NotImplementedException();
     }
 
-    public bool Delete(Question question)
+    public async Task<Question?> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var question = _context.Questions
+                .Where(q => q.Id == id)
+                .FirstOrDefault();
+
+            if (question != null)
+            {
+                _context.Questions.Remove(question);
+                await _context.SaveChangesAsync();
+                
+            }
+            return question;
     }
+    
+    public async Task<Question?> UpdateAsync(QuestionUpdateRequest question)
+    {
+        var updateQuestion = _context.Questions.Where(q => q.Id == question.QuestionId)
+                .FirstOrDefault();
+
+        if (updateQuestion != null)
+        {
+            updateQuestion.QuestionText = question.QuestionText;
+            updateQuestion.Category = question.Category;
+
+            _context.Update(updateQuestion);
+            await _context.SaveChangesAsync();
+        }
+        return updateQuestion;
+    }
+    
 }

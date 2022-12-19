@@ -1,14 +1,15 @@
 using quiz_food_drinks.Entities;
+using quiz_food_drinks.ViewModels.Question.cs;
 
 namespace quiz_food_drinks.Interfaces.Repositories;
 
 public interface IQuestionRepository
 {
-    public List<Question> GetQuestions();
-    public Question? Get(Guid Id);
+    public Task<List<Question>> GetQuestions();
+    public Task<Question?> Get(Guid id);
 
-    Task<Question> AddAsync(Question question);
-    public Question? Put(Question question);
-    public bool Delete(Question question);
-    
+    public Task<Question> AddAsync(Question question);
+    public Task<Question?> UpdateAsync(QuestionUpdateRequest question);
+    public Task<Question?> DeleteAsync(Guid id);
+
 }

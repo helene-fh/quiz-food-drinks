@@ -9,7 +9,7 @@ var config = builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddInfrastructureDependencies(config);
-builder.Services.AddScoped<IQuestionService, QuestionService>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

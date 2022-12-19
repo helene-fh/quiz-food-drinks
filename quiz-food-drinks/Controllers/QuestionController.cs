@@ -18,12 +18,27 @@ public class QuestionController : ControllerBase
         _questionService = questionService;
     }
 
-    /*[HttpGet]
-    public IActionResult GetQuestions()
+    [HttpGet]
+    public async Task<IActionResult> GetQuestions()
     {
-        return Ok(_questionService.Get());
-    }*/
-    
+        var question = await _questionService.AllQuestions();
+            
+        return Ok(question);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Question>> GetQuestion(Guid id)
+    {
+        
+        var question = await _questionService.GetQuestion(id);
+        
+        if (question is null)
+        {
+            return NotFound();
+        }
+        return Ok(question);
+    }
+
 
     [HttpPost]
     public IActionResult AddQuestion(QuestionCreateRequest question)
@@ -31,5 +46,28 @@ public class QuestionController : ControllerBase
         return Ok( _questionService.AddQuestion(question));
     }
 
+    [HttpPut("{id}")]
+    public async Task<ActionResult<Question>> UpdateQuestion(QuestionUpdateRequest question, Guid id)
+    {
+        await _questionService.GetQuestion(id);
+        if (question.QuestionId == id)
+        {
+            await _questionService.UpdateQuestion(question);
+        }
+        return Ok(question);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Question>> DeleteQuestion(Guid id)
+    {
+        var question = await _questionService.DeleteQuestion(id);
+
+        if (question is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(question);
+    }
 
 }
