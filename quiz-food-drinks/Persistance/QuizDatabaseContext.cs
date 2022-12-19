@@ -10,7 +10,7 @@ public class QuizDatabaseContext : DbContext
     public DbSet<Category> Categories { get; set; }
 
     public QuizDatabaseContext() 
-    {
+    { 
 
     }
 
@@ -22,9 +22,10 @@ public class QuizDatabaseContext : DbContext
     {
         
         if (!optionsBuilder.IsConfigured)
-            optionsBuilder.UseSqlite();
+            optionsBuilder.UseSqlite("Data Source=QuizSqlLight.db");
 
         base.OnConfiguring(optionsBuilder);
     }
+    
     
 }
