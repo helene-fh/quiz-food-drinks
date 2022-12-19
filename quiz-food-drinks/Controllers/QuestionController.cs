@@ -19,7 +19,7 @@ public class QuestionController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetQuestions()
+    public async Task<ActionResult<Question>> GetQuestions()
     {
         var question = await _questionService.AllQuestions();
             
@@ -39,11 +39,10 @@ public class QuestionController : ControllerBase
         return Ok(question);
     }
 
-
     [HttpPost]
-    public IActionResult AddQuestion(QuestionCreateRequest question)
+    public async Task <ActionResult<Question>> AddQuestion(QuestionCreateRequest question)
     {
-        return Ok( _questionService.AddQuestion(question));
+        return Ok(await _questionService.AddQuestion(question));
     }
 
     [HttpPut("{id}")]
