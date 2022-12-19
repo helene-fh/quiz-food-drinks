@@ -26,6 +26,16 @@ public class QuestionService : IQuestionService
         return await _questionRepository.GetAsync(id);
     }
 
+    public async Task<Question> GetRandomQuestion()
+    {
+        Random random = new Random();
+
+        var allQuestions = await _questionRepository.GetQuestionsAsync();
+        var question = allQuestions.ElementAt(random.Next(0, allQuestions.Count));
+
+        return question;
+    }
+
     public async Task<Question> AddQuestion(QuestionCreateRequest question)
     {
       var newQuestion = new Question()

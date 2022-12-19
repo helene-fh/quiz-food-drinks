@@ -1,14 +1,30 @@
 using quiz_food_drinks.Entities;
+using quiz_food_drinks.ViewModels;
 
 namespace quiz_food_drinks.Models;
 
-public class QuizModel
+public class QuizModel 
 {
     public Guid Id { get; set; }
+
+    public string TriviaId { get; set; }
+
+    public string Question { get; set; }
     
-    public Question Question { get; set; }
+    public List<string> Answers { get; set; }
     
-    public List<Answer> Answers { get; set; }
-    
-    public Category Category { get; set; }
+    public string Category { get; set; }
+
+    public QuizModel()
+    {
+    }
+
+    public QuizModel(string triviaId, string question, List<string> answers, string category)
+    {
+        Id = Guid.NewGuid();
+        TriviaId = triviaId;
+        Question = question;
+        Answers = answers;
+        Category = category;
+    }
 }
