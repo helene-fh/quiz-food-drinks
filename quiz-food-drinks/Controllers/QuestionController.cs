@@ -22,14 +22,13 @@ public class QuestionController : ControllerBase
     public async Task<ActionResult<Question>> GetQuestions()
     {
         var question = await _questionService.AllQuestions();
-            
+        
         return Ok(question);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Question>> GetQuestion(Guid id)
     {
-        
         var question = await _questionService.GetQuestion(id);
         
         if (question is null)
@@ -42,13 +41,24 @@ public class QuestionController : ControllerBase
     [HttpPost]
     public async Task <ActionResult<Question>> AddQuestion(QuestionCreateRequest question)
     {
+        if (question is null)
+        {
+            return NotFound();
+        }
+
         return Ok(await _questionService.AddQuestion(question));
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult<Question>> UpdateQuestion(QuestionUpdateRequest question, Guid id)
     {
+        if (id != question.QuestionId)
+        {
+            return BadRequest();
+        }
+
         await _questionService.GetQuestion(id);
+        
         if (question.QuestionId == id)
         {
             await _questionService.UpdateQuestion(question);

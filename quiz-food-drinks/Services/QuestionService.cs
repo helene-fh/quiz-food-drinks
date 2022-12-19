@@ -18,12 +18,12 @@ public class QuestionService : IQuestionService
     
     public async Task<List<Question>> AllQuestions()
     {
-        return await _questionRepository.GetQuestions();
+        return await _questionRepository.GetQuestionsAsync();
     }
     
     public async Task<Question?> GetQuestion(Guid id)
     {
-        return await _questionRepository.Get(id);
+        return await _questionRepository.GetAsync(id);
     }
 
     public async Task<Question> AddQuestion(QuestionCreateRequest question)
@@ -46,6 +46,7 @@ public class QuestionService : IQuestionService
     public async Task<Question?> DeleteQuestion(Guid id)
     {
         return await _questionRepository.DeleteAsync(id);
+        
     }
     
 }

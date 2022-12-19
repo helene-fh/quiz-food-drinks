@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Repositories;
@@ -15,12 +16,12 @@ internal class QuestionRepository : IQuestionRepository
         _context = context;
     }
 
-    public async Task<List<Question>> GetQuestions()
+    public async Task<List<Question>> GetQuestionsAsync()
     {
         return await _context.Questions.ToListAsync();
     }
 
-    public async Task<Question?> Get(Guid id)
+    public async Task<Question?> GetAsync(Guid id)
     {
         return _context.Questions
             .Where(x => x.Id == id)
@@ -33,31 +34,11 @@ internal class QuestionRepository : IQuestionRepository
         await _context.SaveChangesAsync();
         return question;
     }
-
-    public Question? Put(Question question)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<Question?> DeleteAsync(Guid id)
-    {
-        var question = _context.Questions
-                .Where(q => q.Id == id)
-                .FirstOrDefault();
-
-            if (question != null)
-            {
-                _context.Questions.Remove(question);
-                await _context.SaveChangesAsync();
-                
-            }
-            return question;
-    }
     
     public async Task<Question?> UpdateAsync(QuestionUpdateRequest question)
     {
         var updateQuestion = _context.Questions.Where(q => q.Id == question.QuestionId)
-                .FirstOrDefault();
+            .FirstOrDefault();
 
         if (updateQuestion != null)
         {
@@ -68,6 +49,21 @@ internal class QuestionRepository : IQuestionRepository
             await _context.SaveChangesAsync();
         }
         return updateQuestion;
+    }
+    
+    public async Task<Question?> DeleteAsync(Guid id)
+    {
+        var question = _context.Questions
+            .Where(q => q.Id == id)
+            .FirstOrDefault();
+
+        if (question != null)
+        {
+            _context.Questions.Remove(question);
+            await _context.SaveChangesAsync();
+                
+        }
+        return question;
     }
     
 }
