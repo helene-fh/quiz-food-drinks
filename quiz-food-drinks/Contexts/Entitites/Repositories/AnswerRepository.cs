@@ -16,9 +16,13 @@ namespace quiz_food_drinks.Contexts.Entitites.Repositories;
 
 		}
 
-		public List<Answer> GetAnswers() {
+		public async Task<List<Answer>> GetAnswers(Guid id) {
 
-			return _context.Answers.ToList();
+		var answerData = _context.Answers
+		.Where(y => y.QuestionId==id)
+		.ToList();
+		if (answerData!=null) {return answerData; }
+		return answerData;
 
 		}
 

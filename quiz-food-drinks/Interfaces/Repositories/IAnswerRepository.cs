@@ -5,7 +5,7 @@ namespace quiz_food_drinks.Interfaces.Repositories;
 
 	public interface IAnswerRepository
 	{
-        public List<Answer> GetAnswers();
+        public Task<List<Answer>> GetAnswers(Guid id);
         public Answer? Get(Guid Id);
 
         Task<Answer> AddAsync(Answer answer);
