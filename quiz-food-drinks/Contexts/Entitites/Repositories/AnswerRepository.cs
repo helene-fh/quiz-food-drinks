@@ -22,7 +22,7 @@ namespace quiz_food_drinks.Contexts.Entitites.Repositories;
 
 		}
 
-		public Answer? Get(Guid Id) {
+		public Answer? GetAnswer(Guid Id) {
 
 			throw new NotImplementedException();
 
@@ -39,8 +39,21 @@ namespace quiz_food_drinks.Contexts.Entitites.Repositories;
 		public Answer? Put(Answer answer) {
 			throw new NotImplementedException();
 		}
-		public bool Delete(Answer answer) {
-			throw new NotImplementedException();
+
+
+		public async void Delete(Guid id) {
+
+		var answerData = _context.Answers;
+		
+		foreach (Answer answer in answerData) {
+
+				if (answer.Id==id) { answerData.Remove(answer); }
+				await _context.SaveChangesAsync();
+		}
+
+
+
+
 		}
 
 	}

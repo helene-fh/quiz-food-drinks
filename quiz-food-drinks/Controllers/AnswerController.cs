@@ -23,12 +23,12 @@ namespace quiz_food_drinks.Controllers
         }
 
 
-        //// GET: api/values
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        // GET: api/values
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_answerService.GetAnswer());
+        }
 
         //// GET api/values/5
         //[HttpGet("{id}")]
@@ -39,6 +39,7 @@ namespace quiz_food_drinks.Controllers
 
         // POST api/values
         [HttpPost]
+        //[Route("AddAnswer")]
         public IActionResult AddAnswer(AnswerCreateRequest answer)
         {
             return Ok(_answerService.AddAnswer(answer));
@@ -50,11 +51,13 @@ namespace quiz_food_drinks.Controllers
         //{
         //}
 
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE api/values/5
+        [HttpDelete("{id}")]
+        //[Route("Delete")]
+        public void Delete(Guid id)
+        {
+            _answerService.DeleteAnswer(id);
+        }
     }
 }
 

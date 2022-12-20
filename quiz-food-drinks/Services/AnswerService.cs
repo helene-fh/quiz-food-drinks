@@ -16,7 +16,7 @@ namespace quiz_food_drinks.Services;
 		}
 
 
-		public List<Answer> Get() {
+		public List<Answer> GetAnswer() {
 
 			return _answerRepository.GetAnswers();
 
@@ -27,6 +27,12 @@ namespace quiz_food_drinks.Services;
 			var newAnswer = new Answer(answer.AnswerText,answer.IsCorrectAnswer);
 			return _answerRepository.AddAsync(newAnswer);
 
+		}
+
+
+		public void DeleteAnswer(Guid id) {
+
+		_answerRepository.Delete(id);
 		}
 
 	}
