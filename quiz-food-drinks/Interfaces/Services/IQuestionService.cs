@@ -7,7 +7,9 @@ public interface IQuestionService
 {
     Task<List<Question>> AllQuestions();
     Task<Question?> GetQuestion(Guid id);
+    Task<Question> GetRandomQuestion();
     Task<Question> AddQuestion(QuestionCreateRequest question);
     Task<Question?> DeleteQuestion(Guid id);
     Task<Question?> UpdateQuestion(QuestionUpdateRequest question);
+   
 }

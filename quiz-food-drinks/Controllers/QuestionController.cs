@@ -66,6 +66,16 @@ public class QuestionController : ControllerBase
         return Ok(question);
     }
 
+    [HttpGet]
+    [Route("api/[controller]/Random")]
+    public async Task<ActionResult<Question>> GetRandomQuestion()
+    {
+        var question = await _questionService.GetRandomQuestion();
+        
+        return Ok(question);
+
+    }
+
     [HttpDelete("{id}")]
     public async Task<ActionResult<Question>> DeleteQuestion(Guid id)
     {

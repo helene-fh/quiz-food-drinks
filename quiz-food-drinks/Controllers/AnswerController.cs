@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Services;
 using quiz_food_drinks.ViewModels.Answer.cs;
 
@@ -19,7 +20,6 @@ namespace quiz_food_drinks.Controllers
 
         public AnswerController(IAnswerService answerService) {
             _answerService = answerService;
-
         }
 
 
@@ -39,9 +39,13 @@ namespace quiz_food_drinks.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult AddAnswer(AnswerCreateRequest answer)
+        public async Task<ActionResult<Answer>> AddAnswer(AnswerCreateRequest? answer)
         {
-            return Ok(_answerService.AddAnswer(answer));
+            if (answer is null)
+            {
+                return NotFound();
+            }
+            return Ok(await _answerService.AddAnswer(answer));
         }
 
         //// PUT api/values/5

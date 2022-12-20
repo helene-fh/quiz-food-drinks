@@ -28,11 +28,11 @@ namespace quiz_food_drinks.Contexts.Entitites.Repositories;
 
 		}
 
-		public async Task<Answer> AddAsync(Answer answer) {
+
+		public async Task<Answer> AddAsync(Answer answer)
+		{
 			await _context.Answers.AddAsync(answer);
 			await _context.SaveChangesAsync();
-
-
 			return answer;
 		}
 

@@ -7,7 +7,7 @@ namespace quiz_food_drinks.Interfaces.Services;
 	public interface IAnswerService
 	{
 
-		Task<Answer> AddAnswer(AnswerCreateRequest answer);
+		Task<Answer> AddAnswer(AnswerCreateRequest? answer);
 	}
 
 
