@@ -20,7 +20,7 @@ public class TriviaController : ControllerBase
     }
 
     
-    [HttpGet]
+    /*[HttpGet]
     public async Task<IActionResult> GetTrivia() 
     {
         var triviaQuestion = await _triviaRepository.GetTriviaQuiz();
@@ -48,5 +48,5 @@ public class TriviaController : ControllerBase
         }
         
         return Ok(triviaQuestion);
-    }
+    }*/
 }

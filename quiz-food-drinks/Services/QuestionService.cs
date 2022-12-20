@@ -53,10 +53,16 @@ public class QuestionService : IQuestionService
     {
         return await _questionRepository.UpdateAsync(question);
     }
+    
     public async Task<Question?> DeleteQuestion(Guid id)
     {
         return await _questionRepository.DeleteAsync(id);
         
     }
-    
+
+    public async Task<bool> QuestionExists(Guid id)
+    {
+        return await _questionRepository.QuestionExists(id);
+    }
+
 }

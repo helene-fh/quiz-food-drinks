@@ -4,5 +4,5 @@ namespace quiz_food_drinks.Interfaces.Repositories;
 
 public interface ITriviaRepository
 {
-    Task<TriviaModel> GetTriviaQuiz();
+   Task<List<TriviaModel>> GetTriviaQuiz();
 }
