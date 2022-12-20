@@ -21,9 +21,9 @@ namespace quiz_food_drinks.Services;
 		}
 
 
-		public List<Answer> Get() {
+		public async Task<List<Answer>> Get(Guid id) {
 
-			return _answerRepository.GetAnswers();
+			return await _answerRepository.GetAnswers(id);
 
 		}
 

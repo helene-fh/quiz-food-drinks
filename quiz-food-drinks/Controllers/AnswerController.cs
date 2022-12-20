@@ -30,12 +30,13 @@ namespace quiz_food_drinks.Controllers
         //    return new string[] { "value1", "value2" };
         //}
 
-        //// GET api/values/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        // GET api/values/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<Answer>>> Get(Guid id)
+        {
+            var answers = await _answerService.Get(id);
+            return answers;
+        }
 
         // POST api/values
         [HttpPost]
