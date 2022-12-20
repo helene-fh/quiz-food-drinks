@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Repositories;
@@ -15,14 +16,16 @@ internal class QuestionRepository : IQuestionRepository
         _context = context;
     }
 
-    public List<Question> GetQuestions()
+    public async Task<List<Question>> GetQuestionsAsync()
     {
-        return _context.Questions.ToList();
+        return await _context.Questions.ToListAsync();
     }
 
-    public Question? Get(Guid Id)
+    public async Task<Question?> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return _context.Questions
+            .Where(x => x.Id == id)
+            .FirstOrDefault();
     }
     
     public async Task<Question> AddAsync(Question question)
@@ -31,14 +34,36 @@ internal class QuestionRepository : IQuestionRepository
         await _context.SaveChangesAsync();
         return question;
     }
-
-    public Question? Put(Question question)
+    
+    public async Task<Question?> UpdateAsync(QuestionUpdateRequest question)
     {
-        throw new NotImplementedException();
-    }
+        var updateQuestion = _context.Questions.Where(q => q.Id == question.QuestionId)
+            .FirstOrDefault();
 
-    public bool Delete(Question question)
-    {
-        throw new NotImplementedException();
+        if (updateQuestion != null)
+        {
+            updateQuestion.QuestionText = question.QuestionText;
+            updateQuestion.Category = question.Category;
+
+            _context.Update(updateQuestion);
+            await _context.SaveChangesAsync();
+        }
+        return updateQuestion;
     }
+    
+    public async Task<Question?> DeleteAsync(Guid id)
+    {
+        var question = _context.Questions
+            .Where(q => q.Id == id)
+            .FirstOrDefault();
+
+        if (question != null)
+        {
+            _context.Questions.Remove(question);
+            await _context.SaveChangesAsync();
+                
+        }
+        return question;
+    }
+    
 }
