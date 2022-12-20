@@ -19,8 +19,9 @@ public static class ConfigureInfrastructureDependencies
             .AddScoped<IQuestionRepository, QuestionRepository>()
             .AddScoped<IQuestionService, QuestionService>()
             .AddScoped<IQuizRepository, QuizRepository>()
-            .AddScoped<IQuizService, QuizService>();
-
+            .AddScoped<IQuizService, QuizService>()
+            .AddScoped<IAnswerRepository,AnswerRepository>()
+            .AddScoped<IAnswerService, AnswerService>();
     }
 }
                                         
