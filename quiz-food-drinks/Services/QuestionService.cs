@@ -15,24 +15,38 @@ public class QuestionService : IQuestionService
     {
         _questionRepository = questionRepository;
     }
-
-    public List<Question> Get()
+    
+    public async Task<List<Question>> AllQuestions()
     {
-        return _questionRepository.GetQuestions();
+        return await _questionRepository.GetQuestionsAsync();
     }
     
-    public Task<Question> AddQuestion(QuestionCreateRequest question)
+    public async Task<Question?> GetQuestion(Guid id)
     {
-      /*  var newQuestion = new Question()
+        return await _questionRepository.GetAsync(id);
+    }
+
+    public async Task<Question> AddQuestion(QuestionCreateRequest question)
+    {
+      var newQuestion = new Question()
         {
             Id = Guid.NewGuid(),
             QuestionText = question.QuestionText,
             Category = question.Category
         };
-        
-        return _questionRepository.AddAsync(newQuestion);*/
       
-       var newQuestion = new Question(question.QuestionText, question.Category);
-       return _questionRepository.AddAsync(newQuestion);
+       //var newQuestion = new Question(question.QuestionText, question.Category);
+       return await _questionRepository.AddAsync(newQuestion);
     }
+    
+    public async Task<Question?> UpdateQuestion(QuestionUpdateRequest question)
+    {
+        return await _questionRepository.UpdateAsync(question);
+    }
+    public async Task<Question?> DeleteQuestion(Guid id)
+    {
+        return await _questionRepository.DeleteAsync(id);
+        
+    }
+    
 }

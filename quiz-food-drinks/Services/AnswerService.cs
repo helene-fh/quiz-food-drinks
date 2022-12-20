@@ -22,10 +22,18 @@ namespace quiz_food_drinks.Services;
 
 		}
 
-		public Task<Answer> AddAnswer(AnswerCreateRequest answer) {
+		public Task<Answer> AddAnswer(AnswerCreateRequest answer) 
+		{
 
-			var newAnswer = new Answer(answer.AnswerText,answer.IsCorrectAnswer);
-			return _answerRepository.AddAsync(newAnswer);
+			 var newAnswer = new Answer()
+			{
+				Id = Guid.NewGuid(),
+				AnswerText = answer.AnswerText,
+				IsCorrectAnswer = answer.IsCorrectAnswer
+			};
+
+				//var newAnswer = new Answer(answer.AnswerText,answer.IsCorrectAnswer);	
+				return _answerRepository.AddAsync(newAnswer);
 
 		}
 
