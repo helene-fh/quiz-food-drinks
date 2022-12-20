@@ -10,7 +10,7 @@ public class QuestionService : IQuestionService
 {
 
     private readonly IQuestionRepository _questionRepository;
-    
+
     public QuestionService(IQuestionRepository questionRepository)
     {
         _questionRepository = questionRepository;
@@ -38,7 +38,7 @@ public class QuestionService : IQuestionService
 
     public async Task<Question> AddQuestion(QuestionCreateRequest question)
     {
-      var newQuestion = new Question()
+        var newQuestion = new Question()
         {
             Id = Guid.NewGuid(),
             QuestionText = question.QuestionText,
