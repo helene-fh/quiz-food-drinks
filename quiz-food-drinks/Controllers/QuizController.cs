@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using quiz_food_drinks.Interfaces.Services;
+using quiz_food_drinks.Models;
 
 namespace quiz_food_drinks.Controllers;
 
@@ -15,11 +16,11 @@ public class QuizController : ControllerBase
         _quizService = quizService;
     }
 
-    /*[HttpGet]
-    public async Task<IActionResult> GetQuiz()
-    {
+    [HttpGet]
+    public async Task<object?> GetQuiz()
+    { 
         return await _quizService.GetRandomQuiz();
-    }*/
+    }
 
 }
 

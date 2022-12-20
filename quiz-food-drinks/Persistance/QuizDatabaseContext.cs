@@ -26,6 +26,20 @@ public class QuizDatabaseContext : DbContext
 
         base.OnConfiguring(optionsBuilder);
     }
-    
-    
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        CreateQuizModel(modelBuilder);
+    }
+
+    private void CreateQuizModel(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Answer>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.HasOne<Question>().WithMany().HasForeignKey(q => q.QuestionId);
+        });
+    }
 }
