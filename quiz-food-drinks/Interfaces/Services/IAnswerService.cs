@@ -6,8 +6,11 @@ namespace quiz_food_drinks.Interfaces.Services;
 
 	public interface IAnswerService
 	{
-		Task<List<Answer>> Get(Guid id);
-		Task<Answer> AddAnswer(AnswerCreateRequest? answer);
-	}
+		 Task<List<Answer>> Get(Guid id);
+		 Task<Answer> AddAnswer(AnswerCreateRequest? answer);
+		 Task<Answer> DeleteAnswer(Guid id);
+		 Task<Answer?> EditAnswer(AnswerEditRequest answer);
+
+    }
 
 

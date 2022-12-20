@@ -47,6 +47,18 @@ namespace quiz_food_drinks.Services;
 
 		}
 
+	public async Task<Answer> DeleteAnswer(Guid id) {
+		return await _answerRepository.Delete(id);
+	}
+
+	public async Task<Answer?> EditAnswer(AnswerEditRequest answer) {
+
+		return await _answerRepository.EditAnswer(answer);
+
+	}
+
+
+
 }
 
 
