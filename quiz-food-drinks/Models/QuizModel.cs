@@ -5,6 +5,8 @@ namespace quiz_food_drinks.Models;
 
 public class QuizModel 
 {
+    
+    // Något Id måste va identiskt med answer.QuestionId, question.Id, trivia.Id
     public Guid Id { get; set; }
 
     public string TriviaId { get; set; }
@@ -26,5 +28,14 @@ public class QuizModel
         Question = question;
         Answers = answers;
         Category = category;
+    }
+
+    public QuizModel(string quizCategory, string quizId, string quizQuestion)
+    {
+        Id = Guid.NewGuid();
+        Category = quizCategory;
+        TriviaId = quizId;
+        Question = quizQuestion;
+
     }
 }

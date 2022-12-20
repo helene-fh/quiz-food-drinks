@@ -4,8 +4,8 @@ namespace quiz_food_drinks.Models;
 
 public class TriviaModel
 {
-    /*[JsonPropertyName("category")]
-    public string Category { get; set; } */
+    [JsonPropertyName("category")]
+    public string Category { get; set; } 
     
     [JsonPropertyName("id")]
     public string Id { get; set; }
