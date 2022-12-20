@@ -16,12 +16,12 @@ public class Answer : BaseEntity, IAnswer
 
     }
 
+
     public Answer(Guid questionId, string answerText, bool isCorrectAnswer)
     {
         QuestionId = questionId;
         AnswerText = answerText;
         IsCorrectAnswer = isCorrectAnswer;
-        
     }
 
 

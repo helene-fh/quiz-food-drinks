@@ -17,12 +17,9 @@ namespace quiz_food_drinks.Controllers
     {
 
         private readonly IAnswerService _answerService;
-        private readonly IQuestionService _questionService;
 
-        public AnswerController(IAnswerService answerService, IQuestionService questionService) {
+        public AnswerController(IAnswerService answerService) {
             _answerService = answerService;
-            _questionService = questionService;
-
         }
 
 
@@ -42,7 +39,7 @@ namespace quiz_food_drinks.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task <ActionResult<Answer>> AddAnswer(AnswerCreateRequest? answer)
+        public async Task<ActionResult<Answer>> AddAnswer(AnswerCreateRequest? answer)
         {
             if (answer is null)
             {

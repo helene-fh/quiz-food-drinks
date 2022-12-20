@@ -8,6 +8,7 @@ using quiz_food_drinks.Persistance;
 using quiz_food_drinks.ViewModels.Answer.cs;
 using quiz_food_drinks.ViewModels.Question.cs;
 
+
 namespace quiz_food_drinks.Services;
 
 	public class AnswerService : IAnswerService
@@ -25,6 +26,7 @@ namespace quiz_food_drinks.Services;
 			return _answerRepository.GetAnswers();
 
 		}
+
 
 		public async Task<Answer> AddAnswer(AnswerCreateRequest? answer)
 		{
