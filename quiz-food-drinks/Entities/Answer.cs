@@ -7,7 +7,7 @@ public class Answer : BaseEntity, IAnswer
 {
     public Guid QuestionId { get; set; }
 
-    public string AnswerText { get; set; }
+    public string AnswerText { get; set; } = null!;
 
     public bool IsCorrectAnswer { get; set; }
 

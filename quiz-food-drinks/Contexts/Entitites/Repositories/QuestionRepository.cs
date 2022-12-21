@@ -65,5 +65,11 @@ internal class QuestionRepository : IQuestionRepository
         }
         return question;
     }
-    
+
+    public async Task<bool> QuestionExists(Guid id)
+    {
+        var question = await GetAsync(id);
+        return question != null;
+    }
+
 }
