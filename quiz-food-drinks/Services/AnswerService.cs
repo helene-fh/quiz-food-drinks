@@ -33,17 +33,15 @@ namespace quiz_food_drinks.Services;
 
 		}
 
-		public async Task<Answer?> AddAnswer(AnswerCreateRequest? answer)
+		public async Task<Answer?> AddAnswer(AnswerCreateRequest answer)
 		{
 			using (var context = new QuizDatabaseContext())
 			{
-				var questionAnswer = context.Questions.FirstOrDefault(q => answer != null && q.Id == answer.QuestionId);
+				var questionAnswer = context.Questions.FirstOrDefault(q => q.Id == answer.QuestionId);
 
 				if (questionAnswer != null)
 				{
-					if (answer != null)
-					{
-						var newAnswer = new Answer()
+					var newAnswer = new Answer()
 						{
 							Id = Guid.NewGuid(),
 							QuestionId = questionAnswer.Id,
@@ -52,7 +50,6 @@ namespace quiz_food_drinks.Services;
 						};
 
 						return await _answerRepository.AddAsync(newAnswer);
-					}
 				}
 			}
 			return null;

@@ -40,7 +40,7 @@ public class QuestionService : IQuestionService
     {
         var newQuestion = new Question()
         {
-            Id = Guid.NewGuid(),
+            Id = question.Id,
             QuestionText = question.QuestionText,
             Category = question.Category
         };

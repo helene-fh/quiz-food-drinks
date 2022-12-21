@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Mvc;
 using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Repositories;
 using quiz_food_drinks.Interfaces.Services;
 using quiz_food_drinks.Models;
+using quiz_food_drinks.Persistance;
+using quiz_food_drinks.ViewModels.Answer.cs;
+using quiz_food_drinks.ViewModels.Question.cs;
 
 namespace quiz_food_drinks.Services;
 
@@ -62,20 +66,138 @@ public class QuizService : IQuizService
 
         QuizModel? responseQuiz = null;
 
-        if (response != null)
-            foreach (var quiz in response)
+        if (response is null)
+        {
+            return null;
+        }
+
+        foreach (var quiz in response)
+        {
+            Guid triviaId = Guid.Parse(quiz.Id?.PadLeft(32, '0'));
+            // quiz.IncorrectAnswers.ForEach(a => answersList.Add(a));
+            //Random rand = new Random();
+            //answersList.Add(quiz.CorrectAnswer);
+            //var shuffledList = answersList.OrderBy(_ => rand.Next()).ToList();
+            // quiz.IncorrectAnswers = shuffledList;
+            //responseQuiz = new QuizModel(quiz.Category, triviaId, quiz.Question, quiz.IncorrectAnswers);
+            var question = await _questionService.GetQuestion(triviaId);
+
+            // DÅ FINNS DEN I DATABASEN
+            if (question != null)
             {
-                quiz.IncorrectAnswers.ForEach(a => answersList.Add(a));
-                Random rand = new Random();
-                answersList.Add(quiz.CorrectAnswer);
-                var shuffledList = answersList.OrderBy(_ => rand.Next()).ToList();
+                // var quizModel = new QuizModel(question.Category, question.Id, question.QuestionText );
 
-                quiz.IncorrectAnswers = shuffledList;
+                QuizModel quizModel = new QuizModel
+                {
+                    Id = question.Id,
+                    Question = question.QuestionText,
+                    Category = question.Category,
+                    Answers = new List<string>(),
+                };
+                
+              //  await _questionService.AddQuestion();
+              
+                var filteredAnswers = await _answerService.Get(question.Id);
 
-                responseQuiz = new QuizModel(quiz.Category, quiz.Id, quiz.Question, quiz.IncorrectAnswers);
+                foreach (var answer in filteredAnswers)
+                {
+                    if (answer != null)
+                    {
+                        Console.WriteLine($"{answer.AnswerText}");
+                        Console.WriteLine($"{answer.QuestionId}");
+                        quizModel.Answers.Add(answer.AnswerText);
+                    }
+
+                }
+
+                return quizModel;
+                //var responseQuestion = new QuestionCreateRequest(responseQuiz.Question, responseQuiz.Category, responseQuiz.Id);
+                // await _questionService.AddQuestion(responseQuestion);
+                // Hämtar en lista med alla matchande Id:n
             }
 
+            var triviaQuestion = new QuestionCreateRequest();
+            triviaQuestion.QuestionText = quiz.Question;
+            triviaQuestion.Category = quiz.Category;
+            triviaQuestion.Id = triviaId;
+            //Console.WriteLine($"1111111111111111111111 {triviaQuestion.QuestionText}{triviaId}");
+            await _questionService.AddQuestion(triviaQuestion);
+
+            var correctAnswer = new AnswerCreateRequest();
+            correctAnswer.AnswerText = quiz.CorrectAnswer;
+            correctAnswer.IsCorrectAnswer = true;
+            correctAnswer.QuestionId = triviaId;
+            //Console.WriteLine($"1111111111111111111111 {correctAnswer.AnswerText}{correctAnswer.QuestionId}");
+            await _answerService.AddAnswer(correctAnswer);
+            //Console.WriteLine($"1111111111111111111111 {correctAnswer.AnswerText}{correctAnswer.QuestionId}");
+
+            foreach (var a in quiz.IncorrectAnswers)
+            {
+                var answer = new AnswerCreateRequest();
+                answer.AnswerText = a;
+                answer.IsCorrectAnswer = false;
+                answer.QuestionId = triviaId;
+                //Console.WriteLine($"1111111111111111111111 {answer.AnswerText}{answer.QuestionId}");
+                await _answerService.AddAnswer(answer);
+                //Console.WriteLine($"1111111111111111111111 {answer.AnswerText}{answer.QuestionId}");
+            }
+            /*
+           responseQuiz = new QuizModel
+            {
+                Id = triviaId,
+                Question = triviaQuestion.QuestionText,
+                Category = triviaQuestion.Category,
+                Answers = new List<string>(),
+            };
+
+            var filtered = await _answerService.Get(triviaId);
+
+            foreach (var answer in filtered)
+            {
+                if (answer != null)
+                {
+                    Console.WriteLine($"{answer.AnswerText}");
+                    Console.WriteLine($"{answer.QuestionId}");
+                    responseQuiz.Answers.Add(answer.AnswerText);
+                }
+
+            }
+
+            return responseQuiz;
+            */
+            return null;
+        }
+        
         return responseQuiz;
+    }
+    
+    
+    // Mapppar Trivia till Answers
+
+    public async void SaveTriviaQuestion(TriviaModel question)
+    {
+        var triviaQuestion = new QuestionCreateRequest();
+        triviaQuestion.QuestionText = question.Question;
+        triviaQuestion.Category = question.Category;
+        await _questionService.AddQuestion(triviaQuestion);
+    }
+
+    public async void SaveCorrectTriviaAnswers(TriviaModel triviaQuestion, Guid questionId)
+    {
+        var answer = new AnswerCreateRequest();
+        answer.AnswerText = triviaQuestion.CorrectAnswer;
+        answer.IsCorrectAnswer = true;
+        answer.QuestionId = questionId;
+        await _answerService.AddAnswer(answer);
+    }
+
+    public async void SaveIncorrectTriviaAnswers(String incorrectAnswer, Guid questionId)
+    {
+        var answer = new AnswerCreateRequest();
+        answer.AnswerText = incorrectAnswer;
+        answer.IsCorrectAnswer = false;
+        answer.QuestionId = questionId;
+        await _answerService.AddAnswer(answer);
     }
     
     // Konverterar question till quizmodel, Ska bli quiz 
@@ -88,7 +210,8 @@ public class QuizService : IQuizService
         {
             Id = responseQuestion.Id,
             Question = responseQuestion.QuestionText,
-            Category = responseQuestion.Category
+            Category = responseQuestion.Category,
+            Answers = new List<string>(),
         };
 
         Console.WriteLine($"{responseQuestion.Id}");
@@ -103,7 +226,7 @@ public class QuizService : IQuizService
             {
                 Console.WriteLine($"{answer.AnswerText}");
                 Console.WriteLine($"{answer.QuestionId}");
-                //responseQuiz.Answers.Add(answer.AnswerText);
+                responseQuiz.Answers.Add(answer.AnswerText);
             }
 
         }
