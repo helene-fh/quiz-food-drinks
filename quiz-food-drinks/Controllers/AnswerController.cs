@@ -22,17 +22,18 @@ namespace quiz_food_drinks.Controllers
             _answerService = answerService;
         }
 
-
-        //// GET: api/values
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        
+        [HttpGet]
+        public async Task<ActionResult<Question>> GetAnswers()
+        {
+            var answer = await _answerService.AllAnswers();
+        
+            return Ok(answer);
+        }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Answer>>> Get(Guid id)
+        public async Task<List<Answer?>> Get(Guid id)
         {
             var answers = await _answerService.Get(id);
             return answers;

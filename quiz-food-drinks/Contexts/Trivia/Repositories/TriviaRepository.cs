@@ -6,7 +6,7 @@ namespace quiz_food_drinks.Contexts.Trivia.Repositories;
 
 public class TriviaRepository : ITriviaRepository
 {
-    public async Task<List<TriviaModel>> GetTriviaQuiz()
+    public async Task<List<TriviaModel>?> GetTriviaQuiz()
     {
         var uri = "https://the-trivia-api.com/api/questions?categories=food_and_drink&limit=1&region=SE&difficulty=medium";
 

@@ -9,13 +9,13 @@ public class QuizModel
     // Något Id måste va identiskt med answer.QuestionId, question.Id, trivia.Id
     public Guid Id { get; set; }
 
-    public string TriviaId { get; set; }
+    public string TriviaId { get; set; } = null!;
 
-    public string Question { get; set; }
-    
-    public List<string> Answers { get; set; }
-    
-    public string Category { get; set; }
+    public string Question { get; set; } = null!;
+
+    public List<string> Answers { get; set; } = null!;
+
+    public string Category { get; set; } = null!;
 
     public QuizModel()
     {
@@ -30,12 +30,23 @@ public class QuizModel
         Category = category;
     }
 
-    public QuizModel(string quizCategory, string quizId, string quizQuestion)
+
+
+    public QuizModel(string quizCategory, string quizId, string quizQuestion, List<string> quizIncorrectAnswers)
     {
-        Id = Guid.NewGuid();
         Category = quizCategory;
         TriviaId = quizId;
         Question = quizQuestion;
-
+        Answers = quizIncorrectAnswers;
     }
+
+    public QuizModel(string quizCategory, Guid toString, string quizQuestionText)
+    {
+        Category = quizCategory;
+        Id = toString;
+        Question = quizQuestionText;
+    }
+
+    
+    
 }

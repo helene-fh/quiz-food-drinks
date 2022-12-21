@@ -7,7 +7,7 @@ namespace quiz_food_drinks.ViewModels.Answer.cs;
 	{
 
 		public Guid QuestionId { get; set; }
-		public string AnswerText { get; set; }
+		public string AnswerText { get; set; } = null!;
 		public bool IsCorrectAnswer { get; set; }
 		
 	}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Repositories;
 using quiz_food_drinks.Persistance;
@@ -16,14 +17,19 @@ namespace quiz_food_drinks.Contexts.Entitites.Repositories;
 
 		}
 
-		public async Task<List<Answer>> GetAnswers(Guid id) {
 
-		var answerData = _context.Answers
-		.Where(y => y.QuestionId==id)
-		.ToList();
-		if (answerData!=null) {return answerData; }
-		return answerData;
+		public async Task<List<Answer>> GetAnswersAsync()
+		{
+			return await _context.Answers.ToListAsync();
+		}
 
+		public async Task<List<Answer?>> GetAnswers(Guid id) {
+
+			var answerData = _context.Answers
+									.Where(y => y.QuestionId==id)
+									.ToList();
+
+			return answerData;
 		}
 
 		public Answer? Get(Guid Id) {
@@ -33,10 +39,13 @@ namespace quiz_food_drinks.Contexts.Entitites.Repositories;
 		}
 
 
-		public async Task<Answer> AddAsync(Answer answer)
+		public async Task<Answer?> AddAsync(Answer? answer)
 		{
-			await _context.Answers.AddAsync(answer);
-			await _context.SaveChangesAsync();
+			if (answer != null)
+			{
+				await _context.Answers.AddAsync(answer);
+				await _context.SaveChangesAsync();
+			}
 			return answer;
 		}
 

@@ -4,7 +4,6 @@ namespace quiz_food_drinks.ViewModels.Question.cs;
 
 public abstract class QuestionBase : IQuestion
 {
-    public string QuestionText { get; set; }
-    public string Category { get; set; }
-
+    public string QuestionText { get; set; } = null!;
+    public string Category { get; set; } = null!;
 }

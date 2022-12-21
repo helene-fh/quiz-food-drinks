@@ -5,20 +5,20 @@ namespace quiz_food_drinks.Models;
 public class TriviaModel
 {
     [JsonPropertyName("category")]
-    public string Category { get; set; } 
-    
+    public string Category { get; set; } = null!;
+
     [JsonPropertyName("id")]
-    public string Id { get; set; }
-    
+    public string Id { get; set; } = null!;
+
     [JsonPropertyName("correctAnswer")]
-    public string CorrectAnswer { get; set; }
-    
+    public string CorrectAnswer { get; set; } = null!;
+
     [JsonPropertyName("incorrectAnswers")]
-    public List<string> IncorrectAnswers { get; set; }
-    
+    public List<string> IncorrectAnswers { get; set; } = null!;
+
     [JsonPropertyName("question")]
-    public string Question { get; set; }
-    
+    public string Question { get; set; } = null!;
+
     /*[JsonPropertyName("tags")]
     public List<string> Tags { get; set; }
     

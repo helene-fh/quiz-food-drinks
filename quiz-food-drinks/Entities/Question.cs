@@ -5,8 +5,8 @@ namespace quiz_food_drinks.Entities;
 
 public class Question : BaseEntity, IQuestion
 {
-    public string QuestionText { get; set; }
-    public string Category { get; set; }
+    public string QuestionText { get; set; } = null!;
+    public string Category { get; set; } = null!;
 
     public Question()
     {
