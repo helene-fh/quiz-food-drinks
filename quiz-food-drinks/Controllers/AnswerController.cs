@@ -33,10 +33,10 @@ namespace quiz_food_drinks.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<List<Answer?>> Get(Guid id)
+        public async Task<ActionResult<Answer>> Get(Guid id)
         {
             var answers = await _answerService.Get(id);
-            return answers;
+            return Ok(answers);
         }
 
         // POST api/values
@@ -50,17 +50,33 @@ namespace quiz_food_drinks.Controllers
             return Ok(await _answerService.AddAnswer(answer));
         }
 
-        //// PUT api/values/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
+        // PUT api/values/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Answer>>Put(AnswerEditRequest answer, Guid id)
+        {
+            if (id!=answer.AnswerId) {
+                return BadRequest();
+            }
+            await _answerService.Get(id);
+            if (answer.AnswerId==id) {
+                await _answerService.EditAnswer(answer);
+            }
+            return Ok(answer);
 
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        }
+
+        // DELETE api/values/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Answer>> Delete(Guid id)
+        {
+            
+            var deleteAnswer = await _answerService.DeleteAnswer(id);
+            if (deleteAnswer!=null) {
+                return Ok(deleteAnswer);
+            }
+            return NotFound();
+
+        }
     }
 }
 
