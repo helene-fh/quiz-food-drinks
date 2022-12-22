@@ -1,5 +1,5 @@
 # Quiz-food-drinks-Backend  
-
+## MADE BY HELENE AND VINCENT
 ## Description
 Get a random question from our API, that gets a question from the Trivia API or from our database. If a question from Trivia isnt in our database it will be added.
 We used Entity Framework Core 7, Sqlite, MVVM principle and with swagger for this project and it is coded in C#.
@@ -19,4 +19,4 @@ We used Entity Framework Core 7, Sqlite, MVVM principle and with swagger for thi
 5. Check if the answer is true, then you guessed it right, false and its the wrong answer 
 6. Repeat the previous steps to keep the Quiz going
 
-# MADE BY HELENE AND VINCENT
+
