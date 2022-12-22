@@ -15,7 +15,7 @@ We used Entity Framework Core 7, Sqlite, MVVM principle and with swagger for thi
 1. Press *"GET"* under the **"Quiz"**, then press **"Try it out"** at the right side and **"Execute"** to get a Question with an id and relative answers
 2. Make a guess what the right answer is
 3. Copy the id and move up in swagger to **"Answer"** at the top
-4. Press *"GET /api/Answer/{questionId}"*, then press **"Try it out"** and paste the **"id"** in the id box, then press **"Execute"**
+4. Press *"GET /api/Answer/{Id}"*, then press **"Try it out"** and paste the **"id"** in the id box, then press **"Execute"**
 5. Check if the answer is true, then you guessed it right. If false, then its the wrong answer 
 6. Repeat the previous steps to keep the Quiz going
 
