@@ -19,4 +19,4 @@ We used Entity Framework Core 7, Sqlite, MVVM principle and with swagger for thi
 5. Check if the answer is true, then you guessed it right, false and its the wrong answer 
 6. Repeat the previous steps to keep the Quiz going
 
-* MADE BY HELENE AND VINCENT
+# MADE BY HELENE AND VINCENT
