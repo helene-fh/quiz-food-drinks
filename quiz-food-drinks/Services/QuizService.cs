@@ -28,7 +28,7 @@ public class QuizService : IQuizService
         
         if (source == 0)
         {
-           await GetSingleTrivia();
+           return await GetSingleTrivia();
         }
         
         var dbQuiz = await GetQuizFromDb();
