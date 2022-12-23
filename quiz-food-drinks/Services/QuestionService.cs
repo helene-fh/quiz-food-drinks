@@ -28,9 +28,14 @@ public class QuestionService : IQuestionService
         Random random = new Random();
         
         var allQuestions = await _questionRepository.GetQuestionsAsync();
-        var question = allQuestions.ElementAt(random.Next(0, allQuestions.Count));
 
-        return question;
+        if (allQuestions.Count >= 5)
+        {
+            var question = allQuestions.ElementAt(random.Next(0, allQuestions.Count));
+            return question;
+        }
+
+        return null;
     }
 
     public async Task<Question> AddQuestion(QuestionCreateRequest question)
@@ -59,5 +64,5 @@ public class QuestionService : IQuestionService
     {
         return await _questionRepository.QuestionExists(id);
     }
-
+    
 }

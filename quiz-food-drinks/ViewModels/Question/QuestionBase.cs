@@ -12,7 +12,6 @@ public abstract class QuestionBase : IQuestion
     {
   
     }
-
     protected QuestionBase(string questionString, string category)
     {
 

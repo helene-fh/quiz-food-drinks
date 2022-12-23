@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using quiz_food_drinks.Entities;
+using quiz_food_drinks.Interfaces.Entitites;
 using quiz_food_drinks.Interfaces.Repositories;
 using quiz_food_drinks.Persistance;
 using quiz_food_drinks.ViewModels.Question.cs;
@@ -9,10 +10,12 @@ namespace quiz_food_drinks.Contexts.Entitites.Repositories;
 internal class QuestionRepository : IQuestionRepository
 {
     private readonly QuizDatabaseContext _context;
+    private readonly IAnswerRepository _answerRepository;
 
-    public QuestionRepository(QuizDatabaseContext context)
+    public QuestionRepository(QuizDatabaseContext context, IAnswerRepository answerRepository)
     {
         _context = context;
+        _answerRepository = answerRepository;
     }
 
     public async Task<List<Question>> GetQuestionsAsync()
@@ -50,12 +53,13 @@ internal class QuestionRepository : IQuestionRepository
     public async Task<Question?> DeleteAsync(Guid id)
     {
         var question = _context.Questions.Where(q => q.Id == id).FirstOrDefault();
-
+        
         if (question != null)
         {
             _context.Questions.Remove(question);
             await _context.SaveChangesAsync();
-                
+            await _answerRepository.Delete(id);
+
         }
         return question;
     }
@@ -65,5 +69,6 @@ internal class QuestionRepository : IQuestionRepository
         var question = await GetAsync(id);
         return question != null;
     }
+
 
 }

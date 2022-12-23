@@ -2,6 +2,7 @@ using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Repositories;
 using quiz_food_drinks.Interfaces.Services;
 using quiz_food_drinks.Models;
+using quiz_food_drinks.ViewModels;
 using quiz_food_drinks.ViewModels.Answer.cs;
 using quiz_food_drinks.ViewModels.Question.cs;
 
@@ -35,7 +36,8 @@ public class QuizService : IQuizService
         {
             return dbQuiz;
         }
-        return null;
+        
+        return await GetSingleTrivia();
     }
 
 
@@ -72,9 +74,18 @@ public class QuizService : IQuizService
             SaveTriviaQuestion(response[0], triviaId);
             SaveCorrectTriviaAnswers(quiz, triviaId);
             SaveIncorrectTriviaAnswers(quiz.IncorrectAnswers, triviaId);
-            var newQuestion = _questionService.GetQuestion(triviaId);
+            var newQuestion = await _questionService.GetQuestion(triviaId);
             if (newQuestion != null)
             {
+                quizModel = new QuizModel
+                {
+                    Id = newQuestion.Id,
+                    Question = newQuestion.QuestionString,
+                    Category = newQuestion.Category,
+                    Answers = new List<string>(),
+                };
+
+                await AddRandomizedAnswersList(quizModel, newQuestion);
                 return quizModel;
             }
             return null;
@@ -84,7 +95,6 @@ public class QuizService : IQuizService
         
     }
     
-
 
     private async Task<Question?> CheckTriviaQuestionInDb(Question? question)
     {
@@ -135,7 +145,7 @@ public class QuizService : IQuizService
     private async Task<QuizModel?> GetQuizFromDb()
     {
         var responseQuestion = await _questionService.GetRandomQuestion();
-
+        
         if (responseQuestion is null)
         {
             return null;
@@ -175,4 +185,5 @@ public class QuizService : IQuizService
 
          return shuffledAnswersList;
     }
+
 }

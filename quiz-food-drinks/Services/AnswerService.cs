@@ -1,14 +1,8 @@
-﻿using System;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using quiz_food_drinks.Entities;
+﻿using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Repositories;
 using quiz_food_drinks.Interfaces.Services;
 using quiz_food_drinks.Persistance;
 using quiz_food_drinks.ViewModels.Answer.cs;
-using quiz_food_drinks.ViewModels.Question.cs;
-using static System.Console;
-
 
 namespace quiz_food_drinks.Services;
 
@@ -67,6 +61,7 @@ namespace quiz_food_drinks.Services;
 
 
 
-}
+
+	}
 
 
