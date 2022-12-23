@@ -5,9 +5,8 @@ namespace quiz_food_drinks.Persistance;
 
 public class QuizDatabaseContext : DbContext
 {
-    public DbSet<Question> Questions { get; set; } = null!;
-    public DbSet<Answer> Answers { get; set; } = null!;
-    public DbSet<Category> Categories { get; set; } = null!;
+    public DbSet<Question> Questions { get; set; } 
+    public DbSet<Answer> Answers { get; set; } 
 
     public QuizDatabaseContext() 
     { 

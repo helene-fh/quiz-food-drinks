@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Repositories;
@@ -23,9 +22,7 @@ internal class QuestionRepository : IQuestionRepository
 
     public async Task<Question?> GetAsync(Guid id)
     {
-        return _context.Questions
-            .Where(x => x.Id == id)
-            .FirstOrDefault();
+        return _context.Questions.Where(x => x.Id == id).FirstOrDefault();
     }
     
     public async Task<Question> AddAsync(Question question)
@@ -37,12 +34,11 @@ internal class QuestionRepository : IQuestionRepository
     
     public async Task<Question?> UpdateAsync(QuestionUpdateRequest question)
     {
-        var updateQuestion = _context.Questions.Where(q => q.Id == question.QuestionId)
-            .FirstOrDefault();
+        var updateQuestion = _context.Questions.Where(q => q.Id == question.QuestionId).FirstOrDefault();
 
         if (updateQuestion != null)
         {
-            updateQuestion.QuestionText = question.QuestionText;
+            updateQuestion.QuestionString = question.QuestionString;
             updateQuestion.Category = question.Category;
 
             _context.Update(updateQuestion);
@@ -53,9 +49,7 @@ internal class QuestionRepository : IQuestionRepository
     
     public async Task<Question?> DeleteAsync(Guid id)
     {
-        var question = _context.Questions
-            .Where(q => q.Id == id)
-            .FirstOrDefault();
+        var question = _context.Questions.Where(q => q.Id == id).FirstOrDefault();
 
         if (question != null)
         {

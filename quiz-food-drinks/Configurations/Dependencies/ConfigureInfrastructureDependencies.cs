@@ -1,5 +1,4 @@
 using quiz_food_drinks.Contexts.Entitites.Repositories;
-using quiz_food_drinks.Contexts.QuizGame;
 using quiz_food_drinks.Contexts.Trivia.Repositories;
 using quiz_food_drinks.Interfaces.Repositories;
 using quiz_food_drinks.Interfaces.Services;
@@ -18,10 +17,9 @@ public static class ConfigureInfrastructureDependencies
             .AddScoped<ITriviaRepository, TriviaRepository>()
             .AddScoped<IQuestionRepository, QuestionRepository>()
             .AddScoped<IQuestionService, QuestionService>()
-            .AddScoped<IQuizRepository, QuizRepository>()
-            .AddScoped<IQuizService, QuizService>()
-            .AddScoped<IAnswerRepository,AnswerRepository>()
-            .AddScoped<IAnswerService, AnswerService>();
+            .AddScoped<IAnswerRepository, AnswerRepository>()
+            .AddScoped<IAnswerService, AnswerService>()
+            .AddScoped<IQuizService, QuizService>();
     }
 }
                                         

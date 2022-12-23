@@ -8,15 +8,23 @@ public class TriviaRepository : ITriviaRepository
 {
     public async Task<List<TriviaModel>?> GetTriviaQuiz()
     {
-        var uri = "https://the-trivia-api.com/api/questions?categories=food_and_drink&limit=1&region=SE&difficulty=medium";
+        /*try
+        {*/
+            var uri = "https://the-trivia-api.com/api/questions?categories=food_and_drink&limit=1&region=SE&difficulty=medium";
 
-        using var client = new HttpClient();
+            using var client = new HttpClient();
 
-        var response = await client.GetAsync(uri);
-        var stream = await response.Content.ReadAsStreamAsync();
+            var response = await client.GetAsync(uri);
+            var stream = await response.Content.ReadAsStreamAsync();
 
-        var triviaQuiz = await JsonSerializer.DeserializeAsync<List<TriviaModel>>(stream);
+            var triviaQuiz = await JsonSerializer.DeserializeAsync<List<TriviaModel>>(stream);
 
-       return triviaQuiz;
+            return triviaQuiz;
+       /* }
+        catch (Exception exeption)
+        {
+            throw new Exception(exeption.Message);
+        }*/
+        
     }
 }

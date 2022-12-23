@@ -1,16 +1,13 @@
 using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Repositories;
 using quiz_food_drinks.Interfaces.Services;
-using quiz_food_drinks.Persistance;
 using quiz_food_drinks.ViewModels.Question.cs;
 
 namespace quiz_food_drinks.Services;
 
 public class QuestionService : IQuestionService
 {
-
     private readonly IQuestionRepository _questionRepository;
-
     public QuestionService(IQuestionRepository questionRepository)
     {
         _questionRepository = questionRepository;
@@ -26,10 +23,10 @@ public class QuestionService : IQuestionService
         return await _questionRepository.GetAsync(id);
     }
 
-    public async Task<Question> GetRandomQuestion()
+    public async Task<Question?> GetRandomQuestion()
     {
         Random random = new Random();
-
+        
         var allQuestions = await _questionRepository.GetQuestionsAsync();
         var question = allQuestions.ElementAt(random.Next(0, allQuestions.Count));
 
@@ -41,12 +38,11 @@ public class QuestionService : IQuestionService
         var newQuestion = new Question()
         {
             Id = question.Id,
-            QuestionText = question.QuestionText,
+            QuestionString = question.QuestionString,
             Category = question.Category
         };
-      
-       //var newQuestion = new Question(question.QuestionText, question.Category);
-       return await _questionRepository.AddAsync(newQuestion);
+        
+        return await _questionRepository.AddAsync(newQuestion);
     }
     
     public async Task<Question?> UpdateQuestion(QuestionUpdateRequest question)
@@ -57,7 +53,6 @@ public class QuestionService : IQuestionService
     public async Task<Question?> DeleteQuestion(Guid id)
     {
         return await _questionRepository.DeleteAsync(id);
-        
     }
 
     public async Task<bool> QuestionExists(Guid id)
