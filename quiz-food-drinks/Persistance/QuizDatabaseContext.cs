@@ -5,9 +5,8 @@ namespace quiz_food_drinks.Persistance;
 
 public class QuizDatabaseContext : DbContext
 {
-    public DbSet<Question> Questions { get; set; }
-    public DbSet<Answer> Answers { get; set; }
-    public DbSet<Category> Categories { get; set; }
+    public DbSet<Question> Questions { get; set; } 
+    public DbSet<Answer> Answers { get; set; } 
 
     public QuizDatabaseContext() 
     { 
@@ -26,6 +25,20 @@ public class QuizDatabaseContext : DbContext
 
         base.OnConfiguring(optionsBuilder);
     }
-    
-    
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        CreateQuizModel(modelBuilder);
+    }
+
+    private void CreateQuizModel(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Answer>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.HasOne<Question>().WithMany().HasForeignKey(q => q.QuestionId);
+        });
+    }
 }

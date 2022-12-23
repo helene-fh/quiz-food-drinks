@@ -4,9 +4,9 @@ namespace quiz_food_drinks.ViewModels.Question.cs;
 
 public class QuestionResponse : QuestionBase
 {
-    public QuestionResponse(IQuestion question)
+    public QuestionResponse(IQuestion question) : base()
     {
-        base.QuestionText = question.QuestionText;
+        base.QuestionString = question.QuestionString;
         base.Category = question.Category;
     }
 }

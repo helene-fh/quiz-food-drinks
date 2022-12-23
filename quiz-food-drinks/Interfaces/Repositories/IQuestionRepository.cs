@@ -5,11 +5,11 @@ namespace quiz_food_drinks.Interfaces.Repositories;
 
 public interface IQuestionRepository
 {
-    public Task<List<Question>> GetQuestionsAsync();
-    public Task<Question?> GetAsync(Guid id);
-
-    public Task<Question> AddAsync(Question question);
-    public Task<Question?> UpdateAsync(QuestionUpdateRequest question);
-    public Task<Question?> DeleteAsync(Guid question);
+    Task<List<Question>> GetQuestionsAsync();
+    Task<Question?> GetAsync(Guid id);
+    Task<Question> AddAsync(Question question);
+    Task<Question?> UpdateAsync(QuestionUpdateRequest question);
+    Task<Question?> DeleteAsync(Guid question);
+    Task<bool> QuestionExists(Guid id);
 
 }

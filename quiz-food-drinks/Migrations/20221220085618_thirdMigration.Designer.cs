@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using quiz_food_drinks.Persistance;
 
@@ -10,9 +11,11 @@ using quiz_food_drinks.Persistance;
 namespace quizfooddrinks.Migrations
 {
     [DbContext(typeof(QuizDatabaseContext))]
-    partial class QuizDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20221220085618_thirdMigration")]
+    partial class thirdMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.1");
@@ -40,6 +43,21 @@ namespace quizfooddrinks.Migrations
                     b.ToTable("Answers");
                 });
 
+            modelBuilder.Entity("quiz_food_drinks.Entities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("quiz_food_drinks.Entities.Question", b =>
                 {
                     b.Property<Guid>("Id")
@@ -50,7 +68,7 @@ namespace quizfooddrinks.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("QuestionString")
+                    b.Property<string>("QuestionText")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

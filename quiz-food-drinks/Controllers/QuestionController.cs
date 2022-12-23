@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Services;
-using quiz_food_drinks.Persistance;
-using quiz_food_drinks.Services;
 using quiz_food_drinks.ViewModels.Question.cs;
 
 namespace quiz_food_drinks.Controllers;
@@ -64,6 +62,16 @@ public class QuestionController : ControllerBase
             await _questionService.UpdateQuestion(question);
         }
         return Ok(question);
+    }
+
+    [HttpGet]
+    [Route("api/[controller]/Random")]
+    public async Task<ActionResult<Question>> GetRandomQuestion()
+    {
+        var question = await _questionService.GetRandomQuestion();
+        
+        return Ok(question);
+
     }
 
     [HttpDelete("{id}")]

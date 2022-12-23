@@ -16,8 +16,10 @@ public static class ConfigureInfrastructureDependencies
         return services
             .AddScoped<ITriviaRepository, TriviaRepository>()
             .AddScoped<IQuestionRepository, QuestionRepository>()
-            .AddScoped<IQuestionService, QuestionService>();
-
+            .AddScoped<IQuestionService, QuestionService>()
+            .AddScoped<IAnswerRepository, AnswerRepository>()
+            .AddScoped<IAnswerService, AnswerService>()
+            .AddScoped<IQuizService, QuizService>();
     }
 }
                                         
