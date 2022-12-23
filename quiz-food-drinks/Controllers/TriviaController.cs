@@ -9,6 +9,7 @@ namespace quiz_food_drinks.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Produces("application/json")]
 
 public class TriviaController : ControllerBase
 {

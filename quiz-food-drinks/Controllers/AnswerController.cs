@@ -13,6 +13,7 @@ namespace quiz_food_drinks.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Produces("application/json")]
     public class AnswerController : ControllerBase
     {
 
@@ -22,36 +23,115 @@ namespace quiz_food_drinks.Controllers
             _answerService = answerService;
         }
 
-        
+        /// <summary>
+        /// Get all answers.
+        /// </summary>
+        /// <returns>A list of all the answers</returns>
+        /// <remarks>
+        /// **Sample request:**
+        ///```
+        ///[
+        /// {
+        ///
+        ///"questionId": "6658a09f-5532-4e28-951f-637dfe5f66c1",
+        /// "answerText": "Yolo",
+        /// "isCorrectAnswer": false,
+        /// "id": "333dfc00-9a56-42b9-b1fa-678e0e50f3b5"
+        ///
+        /// }
+        ///]
+        ///```
+        /// </remarks>
+        /// <response code="200">Returns the list of answers</response>
+        /// <response code="400">Whops something went wrong</response>
         [HttpGet]
+        [Route("api/[controller]/GetAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Question>> GetAnswers()
         {
             var answer = await _answerService.AllAnswers();
-        
+            if (answer==null) { return BadRequest("try again later!"); }
             return Ok(answer);
         }
 
-        // GET api/values/5
+        /// <summary>
+        /// Get Answer from id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>An Answer</returns>
+        /// <remarks>
+        ///   **Sample request:**
+        ///    ``` {
+        ///         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        ///         "questionId": "6B29FC40-CA47-1067-B31D-00DD010662DA",
+        ///         "answerText": "Leia",
+        ///         "isCorrectAnswer": false
+        ///     }
+        ///     ```
+        /// </remarks>
+        /// <response code="200">Returns an answer</response>
+        
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<Answer>> Get(Guid id)
         {
             var answers = await _answerService.Get(id);
             return Ok(answers);
         }
 
-        // POST api/values
+        /// <summary>
+        /// Add a new answer to a Question(id)
+        /// </summary>
+        /// <param name="answer"></param>
+        /// <returns>A new added Answer to a Question.</returns>
+        /// <remarks>
+        ///**Sample request:**
+        /// ```Answer
+        /// {
+        ///     "questionId": "Enter an id from a Question!",
+        ///     "answerText": "It´s Superman",
+        ///     "isCorrectAnswer": true
+        /// }``
+        ///</remarks>
+        ////// <response code="200"></response>
+        /// /// <response code="404"></response>
         [HttpPost]
+        [Route("api/[controller]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Answer>> AddAnswer(AnswerCreateRequest? answer)
         {
             if (answer is null)
             {
-                return NotFound();
+                return NotFound("Invalid id");
             }
             return Ok(await _answerService.AddAnswer(answer));
         }
 
-        // PUT api/values/5
+        /// <summary>
+        /// Update an answer by id
+        /// </summary>
+        /// <param name="answer"></param>
+        /// <param name="id"></param>
+        /// <returns>An updated answer</returns>
+        /// <remarks>
+        ///
+        /// **Sample request:**
+        /// ```  
+        ///    {
+        ///       "questionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        ///       "answerText": "new updated text",
+        ///       "isCorrectAnswer": new bool update,
+        ///       "answerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        ///   }
+        ///   ```
+        /// </remarks>
+        /// <response code="200">Answer was updated</response>
+        /// <response code="400">Something went wrong, try again</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Answer>>Put(AnswerEditRequest answer, Guid id)
         {
             if (id!=answer.AnswerId) {
@@ -65,8 +145,26 @@ namespace quiz_food_drinks.Controllers
 
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
+        /// <summary>
+        /// Delete an answer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>deleted answer</returns>
+        /// <remarks>
+        ///**Sample request:**
+        ///```{
+        ///   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        ///   "questionId": "6B29FC40-CA47-1067-B31D-00DD010662DA",
+        ///   "answerText": "Luke",
+        ///   "isCorrectAnswer": false
+        /// }``
+    ///
+    /// </remarks>
+    /// <response code="200">Deleted answer</response>
+    /// /// <response code="404">Invalid id</response>
+    [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Answer>> Delete(Guid id)
         {
             
@@ -74,7 +172,7 @@ namespace quiz_food_drinks.Controllers
             if (deleteAnswer!=null) {
                 return Ok(deleteAnswer);
             }
-            return NotFound();
+            return NotFound("Check the id");
 
         }
     }

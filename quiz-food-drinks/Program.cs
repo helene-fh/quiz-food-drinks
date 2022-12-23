@@ -1,5 +1,7 @@
+using System.Reflection;
 using quiz_food_drinks.Configurations.Dependencies;
 using quiz_food_drinks.Configurations.EntityFramework;
+using quiz_food_drinks.Configurations.SwaggerSchema;
 using quiz_food_drinks.Interfaces.Services;
 using quiz_food_drinks.Services;
 
@@ -14,6 +16,45 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+    a =>
+    {
+        a.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+        {
+
+            Title = "Quiz-food-drinks",
+            Version = "v1",
+            Description = "Made by Helene and Vincent"
+        });
+        //Using System.Reflection;
+        var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        a.IncludeXmlComments(Path.Combine(System.AppContext.BaseDirectory, xmlFileName));
+        a.SchemaFilter<SwaggerSchemaExampleFIlter>();
+        a.EnableAnnotations();
+        a.SwaggerDoc("v1-1", new Microsoft.OpenApi.Models.OpenApiInfo
+        {
+            Title = "DemoSwaggerAnnotation",
+            Version = "v1-1"
+
+        });
+        
+
+    });
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        });
+
+
+
+});
 
 builder.Services.AddQuizDbContextUsingSqlLite();
 
@@ -26,6 +67,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+
+
+});
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
