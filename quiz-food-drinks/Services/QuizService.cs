@@ -232,7 +232,7 @@ public class QuizService : IQuizService
         }
         return responseQuiz;
     }
-    
+
     /*public async Task<QuizModel?> GetAnswersFromDb()
     {
         var response = await _answerService.AllAnswers();
@@ -252,6 +252,29 @@ public class QuizService : IQuizService
 
         return responseQuiz;
     }*/
-    
+
+
+
+    public async Task<string> getTrue(string input) {
+
+        var allAnswers = await _answerService.AllAnswers();
+        foreach (var answer in allAnswers)
+        {
+            if (answer.AnswerText.Equals(input)&& answer.IsCorrectAnswer == true)
+            {
+                
+                return "You got it right!";
+                
+            }
+            
+        }
+        return "Sry wrong answer!";
+
+
+
+
+    }
+
+
 
 }

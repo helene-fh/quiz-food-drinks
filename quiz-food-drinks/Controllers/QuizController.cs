@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Services;
 using quiz_food_drinks.Models;
 
@@ -40,8 +41,17 @@ public class QuizController : ControllerBase
     public async Task<object?> GetQuiz()
     {
         var triviaData = _quizService.GetRandomQuiz();
-        if (triviaData==null) { return BadRequest("Try again later"); }
+        if (triviaData == null) { return BadRequest("Try again later"); }
         return Ok(await triviaData);
+    }
+
+
+    [HttpGet("{input}")]
+    public Task<string> Check(string input) {
+
+        var checker = _quizService.getTrue(input);
+        return checker;
+
     }
 
 }

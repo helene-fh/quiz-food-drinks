@@ -1,0 +1,52 @@
+﻿<Properties StartupConfiguration="{6124A457-A8E4-4F45-A6E3-A508678042DE}|https">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.quiz-food-drinks PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="quiz-food-drinks/Controllers/QuestionController.cs">
+    <Files>
+      <File FileName="quiz-food-drinks/Controllers/AnswerController.cs" Line="71" Column="20" />
+      <File FileName="quiz-food-drinks/Controllers/QuestionController.cs" Line="39" Column="14" />
+      <File FileName="quiz-food-drinks/Controllers/QuizController.cs" Line="35" Column="46" />
+      <File FileName="quiz-food-drinks/Program.cs" Line="81" Column="1" />
+      <File FileName="quiz-food-drinks/Configurations/SwaggerSchema/SwaggerSchemaExampleFIlter.cs" Line="1" Column="1" />
+      <File FileName="quiz-food-drinks/Configurations/SwaggerSchema/SwaggerSchemaExampleAttribute.cs" Line="1" Column="1" />
+      <File FileName="quiz-food-drinks/Entities/Answer.cs" Line="1" Column="1" />
+      <File FileName="quiz-food-drinks/Persistance/QuizDatabaseContext.cs" Line="1" Column="1" />
+      <File FileName="quiz-food-drinks/Contexts/Entitites/Repositories/AnswerRepository.cs" Line="1" Column="1" />
+      <File FileName="quiz-food-drinks/Contexts/QuizGame/QuizRepository.cs" Line="1" Column="1" />
+      <File FileName="quiz-food-drinks/Contexts/Trivia/Repositories/TriviaRepository.cs" Line="1" Column="1" />
+      <File FileName="quiz-food-drinks/Contexts/Entitites/Repositories/QuestionRepository.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="quiz-food-drinks" expanded="True">
+            <Node name="quiz-food-drinks" expanded="True">
+              <Node name="Configurations" expanded="True">
+                <Node name="SwaggerSchema" expanded="True" />
+              </Node>
+              <Node name="Contexts" expanded="True">
+                <Node name="Entitites" expanded="True">
+                  <Node name="Repositories" expanded="True" />
+                </Node>
+                <Node name="QuizGame" expanded="True" />
+                <Node name="Trivia" expanded="True">
+                  <Node name="Repositories" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Controllers" expanded="True" />
+              <Node name="Entities" expanded="True" />
+              <Node name="Migrations" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Persistance" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
