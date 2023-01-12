@@ -7,7 +7,8 @@ using quiz_food_drinks.ViewModels.Question.cs;
 
 namespace quiz_food_drinks.Controllers;
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/question_Trivia/[controller]")]
+[ApiExplorerSettings(GroupName = "question_Trivia")]
 [Produces("application/json")]
 
 public class QuestionController : ControllerBase
@@ -20,30 +21,72 @@ public class QuestionController : ControllerBase
     }
 
     /// <summary>
-    /// Get a list of all Questions
+    /// Add a question
     /// </summary>
-    /// <returns>List of Questions</returns>
+    /// <returns>A added question</returns>
     /// <remarks>
-    ///     **Sample request:**
+    /// **Sample request:**
     ///     
-    ///  ```
-    ///  [{
-    ///     "questionText": "How is steak tartare cooked?",
-    ///        "category": "Food & Drink",
-    ///       "id": "00000000-622a-1c3b-7cc5-9eab6f9515ad"
-    ///       },]
-    ///       ```
+    ///```
+    /// POST /Todo
+    /// {
+    ///     "questionText": "string",
+    ///     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    ///     "category": "string"
+    /// }
+    /// ```
     /// </remarks>
-    /// <response code="200">You get list of questions</response>
-    /// <response code="400">Something went wrong, try later</response>
-    [HttpGet]
+    /// <response code="200">Added a new question</response>
+    /// <response code="404">Something went badly, try again?</response>
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Question>> AddQuestion(QuestionCreateRequest question)
+    {
+        if (question is null)
+        {
+            return NotFound("Invalid input");
+        }
+
+        return Ok(await _questionService.AddQuestion(question));
+    }
+
+
+
+
+
+    /// <summary>
+    /// Get all Questions!
+    /// </summary>
+    /// <returns>All Questions</returns>
+    /// <remarks>
+    /// **Sample request:**
+    /// ```
+    /// GET
+    /// [
+    /// {
+    ///   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    ///   "questionText": "Some random question",
+    ///   "category": "Some category"
+    /// },
+    /// {
+    ///   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    ///   "questionText": "Some random question",
+    ///   "category": "Some category"
+    /// },
+    /// ]
+    /// ```
+    /// </remarks>
+    /// <response code="200">Get all Questions!</response>
+    /// <response code="400">Bad request!</response>
+    [HttpGet(Name ="GetAllQuestions")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Question>> GetQuestions()
     {
         var question = await _questionService.AllQuestions();
         if (question!=null) {return Ok(question); }
-        return BadRequest("400, try again later");
+        return BadRequest();
     }
 
     /// <summary>
@@ -51,18 +94,20 @@ public class QuestionController : ControllerBase
     /// </summary>
     /// <returns>A question</returns>
     /// <remarks>
-    ///     **Sample request:**
-    ///   ```  
+    /// **Sample request:**
+    ///   ```
+    ///     GET
     ///     {
     ///   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    ///   "questionText": "Who counts as a sith-lord?",
-    ///   "category": "Star Wars"
-    ///      }
+    ///   "questionText": "Some random question",
+    ///   "category": "Some category"
+    ///     }
     ///```
     /// </remarks>
     /// <response code="200">You get the question</response>
     /// <response code="404">Invalid id</response>
-    [HttpGet("{id}")]
+    /// <param name="id">Question id to found question</param>
+    [HttpGet("{id}",Name ="GetQuestionById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Question>> GetQuestion(Guid id)
@@ -76,57 +121,57 @@ public class QuestionController : ControllerBase
         return Ok(question);
     }
 
-
     /// <summary>
-    /// Add a question
+    /// Get a random question
     /// </summary>
-    /// <returns>A added question</returns>
+    /// <returns>Randomed question</returns>
     /// <remarks>
-    ///
-    ///     **Sample request:**
+    /// **Sample request:**
     ///     
-    ///```
+    /// ```
+    /// GET
     /// {
-    ///     "questionText": "string",
     ///     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    ///     "category": "string"
+    ///     "questionText": "Who counts as a sith-lord?",
+    ///     "category": "Star Wars"
     /// }
     /// ```
-/// </remarks>
-/// <response code="200">Added a new question</response>
-/// <response code="404">Something went badly, try again?</response>
-    [HttpPost]
+    /// </remarks>
+    /// <response code="200">Success, gets a random question</response>
+    /// <response code="404">Failed, Not Found try again!</response>
+    [HttpGet]
+    [Route("api/[controller]/Random")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task <ActionResult<Question>> AddQuestion(QuestionCreateRequest question)
+    public async Task<ActionResult<Question>> GetRandomQuestion()
     {
-        if (question is null)
-        {
-            return NotFound("Check inputs!");
-        }
+        var question = await _questionService.GetRandomQuestion();
+        if (question == null) { return NotFound("E404,Not Found"); }
+        return Ok(question);
 
-        return Ok(await _questionService.AddQuestion(question));
     }
+
 
     /// <summary>
     /// Update a question by id
     /// </summary>
     /// <returns>Updated question</returns>
     /// <remarks>
-    ///     **Sample request:**
+    /// **Sample request:**
     ///     
     ///   ```
+    ///   PUT /Todo
     ///   {
     ///     "questionText": "string",
     ///     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     ///     "category": "string",
     ///     "questionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-    ///     }
-    ///     ```
-    ///
-    /// </remarks>
+    ///   }
+    ///   ```
+    ///</remarks>
     /// <response code="200">Updated question</response>
     /// <response code="400">Something went wrong</response>
+    /// <param name="id">id of the Question to update</param>
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -134,7 +179,7 @@ public class QuestionController : ControllerBase
     {
         if (id != question.QuestionId)
         {
-            return BadRequest("Check inputs!");
+            return BadRequest("Invalid input");
         }
 
         await _questionService.GetQuestion(id);
@@ -146,51 +191,26 @@ public class QuestionController : ControllerBase
         return Ok(question);
     }
 
-    /// <summary>
-    /// Get a random question
-    /// </summary>
-    /// <returns>Randomed question</returns>
-    /// <remarks>
-    ///     **Sample request:**
-    ///     
-    /// ```
-    /// {
-    ///     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    ///     "questionText": "Who counts as a sith-lord?",
-    ///     "category": "Star Wars"
-    /// }
-    /// ```
-    /// </remarks>
-    /// <response code="200">Gets a random question</response>
-    /// <response code="404">Dont get a random question</response>
-    [HttpGet]
-    [Route("api/[controller]/Random")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Question>> GetRandomQuestion()
-    {
-        var question = await _questionService.GetRandomQuestion();
-        if (question==null) { return NotFound("Try again"); }
-        return Ok(question);
-
-    }
+    
 
     /// <summary>
     /// Delete by id
     /// </summary>
     /// <returns>Deleted question</returns>
     /// <remarks>
-    ///     **Sample request:**
+    /// **Sample request:**
     ///```
+    /// DELETE /Todo
     /// {
     /// "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     /// "questionText": "Who counts as a sith-lord?",
     /// "category": "Star Wars"
-    ///}``
-    ///
-    /// </remarks>
+    /// }
+    /// ```
+    ///</remarks>
     /// <response code="200">Deleted question</response>
     /// <response code="404">Invalid id</response>
+    /// <param name="id">Question id to delete question</param>
 [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

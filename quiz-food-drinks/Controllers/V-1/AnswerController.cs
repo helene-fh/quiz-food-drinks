@@ -12,7 +12,8 @@ using quiz_food_drinks.ViewModels.Answer.cs;
 namespace quiz_food_drinks.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/answer/[controller]")]
+    [ApiExplorerSettings(GroupName = "answer")]
     [Produces("application/json")]
     public class AnswerController : ControllerBase
     {
@@ -22,6 +23,37 @@ namespace quiz_food_drinks.Controllers
         public AnswerController(IAnswerService answerService) {
             _answerService = answerService;
         }
+
+
+        /// <summary>
+        /// Add a new answer to a Question(id)
+        /// </summary>
+        /// <param name="answer"></param>
+        /// <returns>A new added Answer to a Question.</returns>
+        /// <remarks>
+        ///**Sample request:**
+        /// ```Answer
+        /// {
+        ///     "questionId": "Enter an id from a Question!",
+        ///     "answerText": "It´s Superman",
+        ///     "isCorrectAnswer": true
+        /// }``
+        ///</remarks>
+        /// <response code="200"></response>
+        /// <response code="404"></response>
+        [HttpPost(Name = "AddAnAnswer")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Answer>> AddAnswer(AnswerCreateRequest? answer)
+        {
+            if (answer is null)
+            {
+                return NotFound("Invalid id");
+            }
+            return Ok(await _answerService.AddAnswer(answer));
+        }
+
+
 
         /// <summary>
         /// Get all answers.
@@ -44,8 +76,7 @@ namespace quiz_food_drinks.Controllers
         /// </remarks>
         /// <response code="200">Returns the list of answers</response>
         /// <response code="400">Whops something went wrong</response>
-        [HttpGet]
-        [Route("api/[controller]/GetAll")]
+        [HttpGet(Name ="GetAllAnswers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Question>> GetAnswers()
@@ -80,34 +111,7 @@ namespace quiz_food_drinks.Controllers
             return Ok(answers);
         }
 
-        /// <summary>
-        /// Add a new answer to a Question(id)
-        /// </summary>
-        /// <param name="answer"></param>
-        /// <returns>A new added Answer to a Question.</returns>
-        /// <remarks>
-        ///**Sample request:**
-        /// ```Answer
-        /// {
-        ///     "questionId": "Enter an id from a Question!",
-        ///     "answerText": "It´s Superman",
-        ///     "isCorrectAnswer": true
-        /// }``
-        ///</remarks>
-        ////// <response code="200"></response>
-        /// /// <response code="404"></response>
-        [HttpPost]
-        [Route("api/[controller]")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Answer>> AddAnswer(AnswerCreateRequest? answer)
-        {
-            if (answer is null)
-            {
-                return NotFound("Invalid id");
-            }
-            return Ok(await _answerService.AddAnswer(answer));
-        }
+        
 
         /// <summary>
         /// Update an answer by id

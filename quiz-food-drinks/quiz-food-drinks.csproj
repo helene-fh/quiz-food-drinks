@@ -12,7 +12,7 @@
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
           <PrivateAssets>all</PrivateAssets>
@@ -42,11 +42,17 @@
       <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
       <None Remove="Microsoft.AspNetCore.Mvc.Versioning" />
       <None Remove="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" />
-      <None Remove="Configurations\SwaggerSchema\" />
       <None Remove="Swashbuckle.AspNetCore.Annotations" />
+      <None Remove="Configurations\Swagger\" />
+      <None Remove="Controllers\V-1\" />
+      <None Remove="Controllers\V-2\" />
+      <None Remove="Controllers\V-3\" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="ViewModels\Answer.cs\" />
-      <Folder Include="Configurations\SwaggerSchema\" />
+      <Folder Include="Configurations\Swagger\" />
+      <Folder Include="Controllers\V-1\" />
+      <Folder Include="Controllers\V-2\" />
+      <Folder Include="Controllers\V-3\" />
     </ItemGroup>
 </Project>
