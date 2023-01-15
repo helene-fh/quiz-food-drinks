@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Repositories;
@@ -16,9 +17,7 @@ public class QuizService : IQuizService
     private readonly IQuestionService _questionService;
     private readonly IAnswerService _answerService;
     private readonly ITriviaRepository _triviaRepository;
-   // private static Guid tempId;
     private static List<Answer>? shuffledAnswersList;
-    // private static readonly Random random = new Random();
     private QuizModel? trivia;
     private QuizModel quiz;
 
@@ -106,7 +105,13 @@ public class QuizService : IQuizService
                 var filteredAnswers = await _answerService.Get(question.Id);
                 //Random random = new Random();
                 shuffledAnswersList = filteredAnswers.ToList();
+                Debug.WriteLine("!!!!!!!!!!!!!");
+                for (int i = 0; i < shuffledAnswersList.Count(); i++)
+                {
 
+                    Debug.WriteLine(shuffledAnswersList[i].AnswerText + " " + shuffledAnswersList[i].IsCorrectAnswer);
+                }
+                Debug.WriteLine("!!!!!!!!!!!!!");
                 foreach (var answer in filteredAnswers)
                 {
                     if (answer != null)
@@ -176,7 +181,7 @@ public class QuizService : IQuizService
             */
             return null;
         }
-       // tempId = responseQuiz.Id;
+      
         return responseQuiz;
     }
     
@@ -228,6 +233,13 @@ public class QuizService : IQuizService
         var filteredAnswers = await _answerService.Get(responseQuestion.Id);
         Random random = new Random();
          shuffledAnswersList = filteredAnswers.OrderBy(_ => random.Next()).ToList();
+        Debug.WriteLine("!!!!!!!!!!!!!");
+        for (int b = 0; b < shuffledAnswersList.Count(); b++)
+        {
+
+            Debug.WriteLine(shuffledAnswersList[b].AnswerText + " " + shuffledAnswersList[b].IsCorrectAnswer);
+        }
+        Debug.WriteLine("!!!!!!!!!!!!!");
         var i = 1;
         foreach (var answer in shuffledAnswersList)
         {
@@ -239,7 +251,7 @@ public class QuizService : IQuizService
             }
             i++;
         }
-        //tempId = responseQuiz.Id;
+      
         return responseQuiz;
     }
 
@@ -267,44 +279,14 @@ public class QuizService : IQuizService
 
     public async Task<string> getTrue(int input)
     {
-
-        // var allAnswers = await _answerService.AllAnswers();
-        //var idByAnswer = allAnswers.Where(x => x.QuestionId.Equals(tempId)).ToList();
-        //Console.WriteLine("!!!!!!!!!!!!!!!");
-        //Console.WriteLine(tempId);
-        //Console.WriteLine("!!!!!!!!!!!!!!!");
-        //foreach (var answer in allAnswers)
-        //{
-        //    if (answer.AnswerText.Equals(input) && answer.IsCorrectAnswer == true)
-        //    {
-
-        //        return "You got it right!";
-
-        //    }
-
-        //}
-        //return "Sry wrong answer!";
-        Console.WriteLine("!!!!!!!!!!!!!");
+        Debug.WriteLine("!!!!!!!!!!!!!");
         for (int i = 0; i < shuffledAnswersList.Count(); i++)
         {
 
-            Console.WriteLine(shuffledAnswersList[i].AnswerText + " " + shuffledAnswersList[i].IsCorrectAnswer);
+            Debug.WriteLine(shuffledAnswersList[i].AnswerText + " " + shuffledAnswersList[i].IsCorrectAnswer);
         }
-        Console.WriteLine("!!!!!!!!!!!!!");
-        //    foreach (var answer in idByAnswer)
-        //    {
-        //        if (answer.AnswerText.Equals(input) && answer.IsCorrectAnswer.Equals(true))
-        //        {
-
-        //            return "You got it right!";
-
-        //        }
-
-        //    }
-        //    return "Sry wrong answer!";
-
-
-        //}
+        Debug.WriteLine("!!!!!!!!!!!!!");
+       
         if (input <= 0) { return "PLs dont type 0! One of the answers numbers!"; }
         if (input > shuffledAnswersList.Count()) { return "Pls choose one of the answers numbers!"; }
 

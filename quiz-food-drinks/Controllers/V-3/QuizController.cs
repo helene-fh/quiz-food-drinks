@@ -38,10 +38,11 @@ public class QuizController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    
     public async Task<object?> GetQuiz()
     {
         var triviaData = _quizService.GetRandomQuiz();
-        if (triviaData != null) { return NoContent(); }
+        if (triviaData == null) { return NoContent(); }
         return Ok(await triviaData);
     }
 
