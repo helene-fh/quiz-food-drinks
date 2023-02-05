@@ -1,12 +1,15 @@
 ﻿<Properties StartupConfiguration="{6124A457-A8E4-4F45-A6E3-A508678042DE}|https">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.quiz-food-drinks PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="quiz-food-drinks/Configurations/SwaggerSchema/SwaggerSchemaExampleFIlter.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="quiz-food-drinks/Controllers/V-3/QuizController.cs">
     <Files>
-      <File FileName="quiz-food-drinks/Controllers/V-2/TriviaController.cs" Line="11" Column="15" />
-      <File FileName="quiz-food-drinks/Services/QuizService.cs" Line="18" Column="7" />
-      <File FileName="quiz-food-drinks/Configurations/SwaggerSchema/SwaggerSchemaExampleAttribute.cs" Line="1" Column="1" />
-      <File FileName="quiz-food-drinks/Configurations/SwaggerSchema/SwaggerSchemaExampleFIlter.cs" Line="1" Column="1" />
+      <File FileName="quiz-food-drinks/Services/QuizService.cs" Line="75" Column="11" />
+      <File FileName="quiz-food-drinks/Controllers/V-3/QuizController.cs" Line="57" Column="9" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,12 +19,23 @@
               <Node name="Configurations" expanded="True">
                 <Node name="Dependencies" expanded="True" />
                 <Node name="Swagger" expanded="True" />
-                <Node name="SwaggerSchema" expanded="True">
-                  <Node name="SwaggerSchemaExampleFIlter.cs" selected="True" />
+              </Node>
+              <Node name="Contexts" expanded="True">
+                <Node name="Entitites" expanded="True">
+                  <Node name="Repositories" expanded="True" />
+                </Node>
+                <Node name="Trivia" expanded="True">
+                  <Node name="Repositories" expanded="True" />
                 </Node>
               </Node>
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="V-2" expanded="True" />
+                <Node name="V-3" expanded="True" />
+              </Node>
               <Node name="Entities" expanded="True" />
+              <Node name="Interfaces" expanded="True">
+                <Node name="Repositories" expanded="True" />
+              </Node>
               <Node name="Services" expanded="True" />
             </Node>
           </Node>
@@ -29,9 +43,4 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

@@ -32,30 +32,47 @@ public class QuizService : IQuizService
 
     public async Task<QuizModel?> GetRandomQuiz()
     {
-         trivia = await GetSingleTrivia();
-         quiz = await GetQuizFromDb();
+        Random random = new Random();
+        var quizList = new List<object?>
+        {
+            true,
+            false
+        };
+        var randomsQuiz = quizList.ElementAt(random.Next(0, quizList.Count));
+        if (randomsQuiz.Equals(true))
+        {
+            trivia = await GetSingleTrivia();
+            return trivia as QuizModel;
+        }
+        else
+        {
+            quiz = await GetQuizFromDb();
+            return quiz as QuizModel;
+        }
 
+       // trivia = await GetSingleTrivia();
+       // quiz = await GetQuizFromDb();
         //var triviaId = trivia.Id;
-       // var questionId = question.Id;
+        // var questionId = question.Id;
 
-       // LINQ som går in Questions och ser om triviaId finns
-        
+        // LINQ som går in Questions och ser om triviaId finns
+
         //Addera question i databas 
         //var newQuestion = new QuestionCreateRequest();
         //await _questionService.AddQuestion(newQuestion);
 
         // En lista för random  bara 
-        var quizList = new List<object?>
-        {
-            trivia,
-            quiz
-        };
+        //var quizList = new List<object?>
+        //{
+        //    trivia,
+        //    quiz
+        //};
 
         // Slumpa vilken som ska exponeras utåt
-        Random random = new Random();
-        var randomQuiz = quizList.ElementAt(random.Next(0, quizList.Count));
+        //Random random = new Random();
+        //var randomQuiz = quizList.ElementAt(random.Next(0, quizList.Count));
 
-        return randomQuiz as QuizModel;
+        //return randomQuiz as QuizModel;
     }
 
     public async Task<bool> CheckTriviaQuestionIdInDb(Guid id)

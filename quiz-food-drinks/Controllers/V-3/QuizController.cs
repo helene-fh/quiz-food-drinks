@@ -46,7 +46,17 @@ public class QuizController : ControllerBase
         return Ok(await triviaData);
     }
 
-
+    /// <summary>
+    /// Check if your guessed answer is correct!
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns>String line with either right or wrong answer!</returns>
+    /// <remarks>
+    /// **Sample request:**
+    /// ```
+    /// 
+    /// ```
+    /// </remarks>
     [HttpGet("{input}")]
     public Task<string> Check(int input) {
 
