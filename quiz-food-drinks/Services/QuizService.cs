@@ -17,10 +17,6 @@ public class QuizService : IQuizService
     private readonly IAnswerService _answerService;
     private readonly ITriviaRepository _triviaRepository;
     private static List<Answer>? shuffledAnswersList;
-<<<<<<< HEAD
-=======
-    
->>>>>>> df0772c2225295e59ced701a978b138955f862fe
 
     public QuizService(IQuestionService questionService, IAnswerService answerService, ITriviaRepository triviaRepository)
     {
@@ -182,22 +178,16 @@ public class QuizService : IQuizService
         Random random = new Random();
         var filteredList = await _answerService.Get(responseQuestion.Id);
         shuffledAnswersList = filteredList.OrderBy(_ => random.Next()).ToList();
-<<<<<<< HEAD
 
-=======
->>>>>>> df0772c2225295e59ced701a978b138955f862fe
         var counterN = 1;
          foreach (var answer in shuffledAnswersList)
-         {
-            
+         {    
              if (answer != null)
              {
-<<<<<<< HEAD
+
                 responseQuiz.Answers.Add($"{counterN}." +answer.AnswerText);
-=======
-                 responseQuiz.Answers.Add($"{counterN}. "+answer.AnswerText);
->>>>>>> df0772c2225295e59ced701a978b138955f862fe
              }
+
             counterN++;
          }
 
