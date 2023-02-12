@@ -75,7 +75,7 @@ public class QuizController : ControllerBase
     [HttpGet("{input}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<string>? Check(int input) {
+    public async Task<ActionResult<string>>? Check(int input) {
 
         var checker = _quizService.getTrue(input);
         if (checker is null) { return NotFound("Get a Quiz first!"); }
