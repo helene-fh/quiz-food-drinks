@@ -180,7 +180,7 @@ public class QuizService : IQuizService
         Random random = new Random();
         var filteredList = await _answerService.Get(responseQuestion.Id);
         var shuffledAnswersList = filteredList.OrderBy(_ => random.Next()).ToList();
-
+        
          foreach (var answer in shuffledAnswersList)
          {
              if (answer != null)
@@ -194,7 +194,7 @@ public class QuizService : IQuizService
 
 
 
-   /* public  ActionResult<string>? getTrue(int input)
+    public  ActionResult<string>? getTrue(int input)
     {
 
         if (shuffledAnswersList==null) { return null; }
@@ -206,5 +206,5 @@ public class QuizService : IQuizService
         return $"You choose {shuffledAnswersList[input-1].AnswerText},Sry wrong answer!";
 
     }
-    */
+    
 }
