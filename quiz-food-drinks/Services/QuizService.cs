@@ -17,8 +17,7 @@ public class QuizService : IQuizService
     private readonly IAnswerService _answerService;
     private readonly ITriviaRepository _triviaRepository;
     private static List<Answer>? shuffledAnswersList;
-    private QuizModel? trivia;
-    private QuizModel quiz;
+    
 
     public QuizService(IQuestionService questionService, IAnswerService answerService, ITriviaRepository triviaRepository)
     {
@@ -179,14 +178,16 @@ public class QuizService : IQuizService
     {
         Random random = new Random();
         var filteredList = await _answerService.Get(responseQuestion.Id);
-        var shuffledAnswersList = filteredList.OrderBy(_ => random.Next()).ToList();
-        
+        shuffledAnswersList = filteredList.OrderBy(_ => random.Next()).ToList();
+        var counterN = 1;
          foreach (var answer in shuffledAnswersList)
          {
+            
              if (answer != null)
              {
-                 responseQuiz.Answers.Add(answer.AnswerText);
+                 responseQuiz.Answers.Add($"{counterN}. "+answer.AnswerText);
              }
+            counterN++;
          }
 
          return shuffledAnswersList;
@@ -194,7 +195,7 @@ public class QuizService : IQuizService
 
 
 
-    public  ActionResult<string>? getTrue(int input)
+    public  async Task<string>? getTrue(int input)
     {
 
         if (shuffledAnswersList==null) { return null; }
