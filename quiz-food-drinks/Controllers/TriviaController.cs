@@ -8,9 +8,7 @@ using System.Net.Sockets;
 namespace quiz_food_drinks.Controllers;
 
 [ApiController]
-[Route("api/question_Trivia/[controller]")]
-[ApiExplorerSettings(GroupName = "question_Trivia")]
-[Produces("application/json")]
+[Route("api/[controller]")]
 
 public class TriviaController : ControllerBase
 {
