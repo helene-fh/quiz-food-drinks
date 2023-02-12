@@ -1,3 +1,6 @@
+using System;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Repositories;
 using quiz_food_drinks.Interfaces.Services;
@@ -13,6 +16,9 @@ public class QuizService : IQuizService
     private readonly IQuestionService _questionService;
     private readonly IAnswerService _answerService;
     private readonly ITriviaRepository _triviaRepository;
+    private static List<Answer>? shuffledAnswersList;
+    private QuizModel? trivia;
+    private QuizModel quiz;
 
     public QuizService(IQuestionService questionService, IAnswerService answerService, ITriviaRepository triviaRepository)
     {
@@ -20,23 +26,23 @@ public class QuizService : IQuizService
         _answerService = answerService;
         _triviaRepository = triviaRepository;
     }
-    
+
     public async Task<QuizModel?> GetRandomQuiz()
     {
         Random random = new Random();
         int source = random.Next(2);
-        
+
         if (source == 0)
         {
            return await GetSingleTrivia();
         }
-        
+
         var dbQuiz = await GetQuizFromDb();
         if (dbQuiz != null)
         {
             return dbQuiz;
         }
-        
+
         return await GetSingleTrivia();
     }
 
@@ -70,7 +76,7 @@ public class QuizService : IQuizService
                 await AddRandomizedAnswersList(quizModel, question);
                 return quizModel;
             }
-            
+
             SaveTriviaQuestion(response[0], triviaId);
             SaveCorrectTriviaAnswers(quiz, triviaId);
             SaveIncorrectTriviaAnswers(quiz.IncorrectAnswers, triviaId);
@@ -92,9 +98,9 @@ public class QuizService : IQuizService
         }
 
         return quizModel;
-        
+
     }
-    
+
 
     private async Task<Question?> CheckTriviaQuestionInDb(Question? question)
     {
@@ -107,7 +113,7 @@ public class QuizService : IQuizService
                 Category = question.Category,
                 Answers = new List<string>(),
             };
-            
+
             await AddRandomizedAnswersList(quizModel, question);
         }
 
@@ -145,7 +151,7 @@ public class QuizService : IQuizService
     private async Task<QuizModel?> GetQuizFromDb()
     {
         var responseQuestion = await _questionService.GetRandomQuestion();
-        
+
         if (responseQuestion is null)
         {
             return null;
@@ -158,12 +164,12 @@ public class QuizService : IQuizService
             Category = responseQuestion.Category,
             Answers = new List<string>(),
         };
-        
+
         await AddRandomizedAnswersList(responseQuiz, responseQuestion);
 
         return responseQuiz;
     }
-    
+
     public async Task<bool> CheckTriviaQuestionIdInDb(Guid id)
     {
         return await _questionService.QuestionExists(id);
@@ -174,16 +180,31 @@ public class QuizService : IQuizService
         Random random = new Random();
         var filteredList = await _answerService.Get(responseQuestion.Id);
         var shuffledAnswersList = filteredList.OrderBy(_ => random.Next()).ToList();
-        
-         foreach (var answer in shuffledAnswersList) 
+
+         foreach (var answer in shuffledAnswersList)
          {
              if (answer != null)
              {
                  responseQuiz.Answers.Add(answer.AnswerText);
-             } 
+             }
          }
 
          return shuffledAnswersList;
     }
 
+
+
+   /* public  ActionResult<string>? getTrue(int input)
+    {
+
+        if (shuffledAnswersList==null) { return null; }
+        if (input <= 0) { return "PLs dont type 0! One of the answers numbers!"; }
+        if (input > shuffledAnswersList.Count()) { return "Pls choose one of the answers listed by the question!"; }
+
+        if (shuffledAnswersList[input-1].IsCorrectAnswer.Equals(true)) { return $"You choose {shuffledAnswersList[input-1].AnswerText}, You got it right!"; }
+
+        return $"You choose {shuffledAnswersList[input-1].AnswerText},Sry wrong answer!";
+
+    }
+    */
 }
