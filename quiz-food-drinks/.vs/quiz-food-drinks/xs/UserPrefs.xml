@@ -1,0 +1,35 @@
+﻿<Properties StartupConfiguration="{10D56B00-B545-49DB-BD22-6EFC9A18C388}|https">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.quiz-food-drinks PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Services/QuizService.cs">
+    <Files>
+      <File FileName="Entities/Question.cs" Line="14" Column="1" />
+      <File FileName="Interfaces/Services/IQuizService.cs" Line="1" Column="1" />
+      <File FileName="Interfaces/Entitites/IQuestion.cs" Line="1" Column="1" />
+      <File FileName="Entities/Answer.cs" Line="13" Column="1" />
+      <File FileName="Services/QuizService.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="quiz-food-drinks" expanded="True">
+            <Node name="quiz-food-drinks" expanded="True">
+              <Node name="Configurations" expanded="True" />
+              <Node name="Entities" expanded="True" />
+              <Node name="Interfaces" expanded="True">
+                <Node name="Entitites" expanded="True" />
+                <Node name="Services" expanded="True" />
+              </Node>
+              <Node name="Services" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+</Properties>
