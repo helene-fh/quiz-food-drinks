@@ -36,8 +36,8 @@ public class QuestionController : ControllerBase
     /// }
     /// ```
     /// </remarks>
-    /// <response code="200">Added a new question</response>
-    /// <response code="404">Something went badly, try again?</response>
+    /// <response code="200">Success, added a new question</response>
+    /// <response code="404">Error 404, try again later?</response>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -106,7 +106,7 @@ public class QuestionController : ControllerBase
     /// </remarks>
     /// <response code="200">You get the question</response>
     /// <response code="404">Invalid id</response>
-    /// <param name="id">Question id to found question</param>
+    /// <param name="id">Question id(Guid) to found question</param>
     [HttpGet("{id}",Name ="GetQuestionById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -169,9 +169,9 @@ public class QuestionController : ControllerBase
     ///   }
     ///   ```
     ///</remarks>
-    /// <response code="200">Updated question</response>
-    /// <response code="400">Something went wrong</response>
-    /// <param name="id">id of the Question to update</param>
+    /// <response code="200">Success, updated question</response>
+    /// <response code="400">Error 400, check inputs and id(Guid)</response>
+    /// <param name="id">id(Guid) of the Question to update</param>
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -208,9 +208,9 @@ public class QuestionController : ControllerBase
     /// }
     /// ```
     ///</remarks>
-    /// <response code="200">Deleted question</response>
+    /// <response code="200">Success, deleted the question</response>
     /// <response code="404">Invalid id</response>
-    /// <param name="id">Question id to delete question</param>
+    /// <param name="id">Question id(Guid) to delete question</param>
 [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

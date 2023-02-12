@@ -40,8 +40,8 @@ namespace quiz_food_drinks.Controllers
         /// }
         /// ```
         ///</remarks>
-        /// <response code="200"></response>
-        /// <response code="404"></response>
+        /// <response code="200">Success, added a new answer to a question by id(Guid)</response>
+        /// <response code="404">Error 404, invalid id(Guid)</response>
         [HttpPost(Name = "AddAnAnswer")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -80,8 +80,8 @@ namespace quiz_food_drinks.Controllers
         ///]
         ///```
         /// </remarks>
-        /// <response code="200">Returns the list of all answers</response>
-        /// <response code="400">Bad request!</response>
+        /// <response code="200">Success, get list of all answers</response>
+        /// <response code="400">Error 400, Bad request!</response>
         [HttpGet(Name ="GetAllAnswers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -95,7 +95,7 @@ namespace quiz_food_drinks.Controllers
         /// <summary>
         /// Get Answer from id.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Answer id(Guid) to found answer!</param>
         /// <returns>An Answer</returns>
         /// <remarks>
         ///   **Sample request:**
@@ -108,12 +108,15 @@ namespace quiz_food_drinks.Controllers
         ///     ```
         /// </remarks>
         /// <response code="200">Returns an answer</response>
-        
-        [HttpGet("{id}")]
+        /// <response code="404">Invalid id</response>
+        [HttpGet("{id}")] 
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+       
         public async Task<ActionResult<Answer>> Get(Guid id)
         {
             var answers = await _answerService.Get(id);
+            if (answers is null) { return NotFound("Invalid id"); }
             return Ok(answers);
         }
 
@@ -122,8 +125,8 @@ namespace quiz_food_drinks.Controllers
         /// <summary>
         /// Update an answer by id
         /// </summary>
-        /// <param name="answer"></param>
-        /// <param name="id"></param>
+        /// <param name="answer">Updated answer example</param>
+        /// <param name="id">Answer id(Guid) to update an answer!</param>
         /// <returns>An updated answer</returns>
         /// <remarks>
         ///
@@ -137,8 +140,8 @@ namespace quiz_food_drinks.Controllers
         ///   }
         ///   ```
         /// </remarks>
-        /// <response code="200">Answer was updated</response>
-        /// <response code="400">Something went wrong, try again</response>
+        /// <response code="200">Success, answer was updated</response>
+        /// <response code="400">Error 400,check inputs and id(Guid)</response>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -158,7 +161,7 @@ namespace quiz_food_drinks.Controllers
         /// <summary>
         /// Delete an answer
         /// </summary>
-        /// <param name="id">Answer id to be deleted!</param>
+        /// <param name="id">Answer id(Guid) to be deleted!</param>
         /// <returns>deleted answer</returns>
         /// <remarks>
         ///**Sample request:**
@@ -170,7 +173,7 @@ namespace quiz_food_drinks.Controllers
         /// }``
     ///
     /// </remarks>
-    /// <response code="200">Deleted answer</response>
+    /// <response code="200">Success, deleted answer</response>
     /// <response code="404">Invalid id</response>
     [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

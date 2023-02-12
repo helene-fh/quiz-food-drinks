@@ -8,5 +8,5 @@ public interface IQuizService
 {
     //Task<Question> GetQuiz();
     Task<QuizModel?> GetRandomQuiz();
-    Task<string> getTrue(int input);
+    ActionResult<string>? getTrue(int input);
 }

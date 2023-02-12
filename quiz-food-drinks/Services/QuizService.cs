@@ -131,13 +131,14 @@ public class QuizService : IQuizService
                 Debug.WriteLine("!!!!!!!!!!!!!");
                 foreach (var answer in filteredAnswers)
                 {
+                    var counterN = 1;
                     if (answer != null)
                     {
                         Console.WriteLine($"{answer.AnswerText}");
                         Console.WriteLine($"{answer.QuestionId}");
-                        quizModel.Answers.Add("2. "+answer.AnswerText);
+                        quizModel.Answers.Add($"{counterN}. "+answer.AnswerText);
                     }
-
+                    counterN++;
                 }
                 
                 return quizModel;
@@ -257,16 +258,16 @@ public class QuizService : IQuizService
             Debug.WriteLine(shuffledAnswersList[b].AnswerText + " " + shuffledAnswersList[b].IsCorrectAnswer);
         }
         Debug.WriteLine("!!!!!!!!!!!!!");
-        var i = 1;
+        var counterN = 1;
         foreach (var answer in shuffledAnswersList)
         {
             if (answer != null)
             {
                 Console.WriteLine($"{answer.AnswerText}");
                 Console.WriteLine($"{answer.QuestionId}");
-                responseQuiz.Answers.Add($"{i}. "+answer.AnswerText);
+                responseQuiz.Answers.Add($"{counterN}. "+answer.AnswerText);
             }
-            i++;
+            counterN++;
         }
       
         return responseQuiz;
@@ -294,18 +295,19 @@ public class QuizService : IQuizService
 
 
 
-    public async Task<string> getTrue(int input)
+    public  ActionResult<string>? getTrue(int input)
     {
-        Debug.WriteLine("!!!!!!!!!!!!!");
-        for (int i = 0; i < shuffledAnswersList.Count(); i++)
-        {
+        /* Debug.WriteLine("!!!!!!!!!!!!!");
+         for (int i = 0; i < shuffledAnswersList.Count(); i++)
+         {
 
-            Debug.WriteLine(shuffledAnswersList[i].AnswerText + " " + shuffledAnswersList[i].IsCorrectAnswer);
-        }
-        Debug.WriteLine("!!!!!!!!!!!!!");
-       
+             Debug.WriteLine(shuffledAnswersList[i].AnswerText + " " + shuffledAnswersList[i].IsCorrectAnswer);
+         }
+         Debug.WriteLine("!!!!!!!!!!!!!");
+        */
+        if (shuffledAnswersList==null) { return null; }
         if (input <= 0) { return "PLs dont type 0! One of the answers numbers!"; }
-        if (input > shuffledAnswersList.Count()) { return "Pls choose one of the answers numbers!"; }
+        if (input > shuffledAnswersList.Count()) { return "Pls choose one of the answers listed by the question!"; }
 
         if (shuffledAnswersList[input-1].IsCorrectAnswer.Equals(true)) { return $"You choose {shuffledAnswersList[input-1].AnswerText}, You got it right!"; }
         

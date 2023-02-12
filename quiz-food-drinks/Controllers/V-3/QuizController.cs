@@ -26,11 +26,18 @@ public class QuizController : ControllerBase
     /// <remarks>
     /// **Sample request:** 
     /// ```
-    ///     {
-    ///     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    ///     "questionText": "Who counts as a sith-lord?",
-    ///     "category": "Star Wars"
-    ///     }
+    /// GET
+    ///  {
+    ///     "id": "00000000-624a-b0de-348a-461bfc6706a1",
+    ///     "question": "From which part of the world do bananas originate?",
+    ///     "answers": [
+    ///     "1. North America",
+    ///     "2. Central Asia",
+    ///     "3. Europe",
+    ///     "4. Southeast Asia"
+    ///                 ],
+    ///     "category": "Food, Drink" 
+    ///  }    
     /// ```
     /// </remarks>
     /// <response code="200">Success,you got a randomed question</response>
@@ -49,19 +56,29 @@ public class QuizController : ControllerBase
     /// <summary>
     /// Check if your guessed answer is correct!
     /// </summary>
-    /// <param name="input"></param>
+    /// <param name="input">Enter one of the listed answers number (int)</param>
     /// <returns>String line with either right or wrong answer!</returns>
     /// <remarks>
     /// **Sample request:**
     /// ```
-    /// 
+    /// GET
+    /// {
+    /// "result":null,
+    /// "value": "You choose Southeast Asia, You got it right!"
+    /// }
     /// ```
     /// </remarks>
+    /// /// <response code="200">Success,you get a correct or incorrect answer!</response>
+    /// <response code="404">Get a Quiz before answering!</response>
     [HttpGet("{input}")]
-    public Task<string> Check(int input) {
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<string>? Check(int input) {
 
         var checker = _quizService.getTrue(input);
-        return checker;
+        if (checker is null) { return NotFound("Get a Quiz first!"); }
+        return Ok(checker);
+        
 
     }
 
