@@ -195,17 +195,27 @@ public class QuizService : IQuizService
 
 
 
-    public  async Task<string>? getTrue(int input)
+    public  async Task<AnswerBase> getTrue(int input)
     {
+        if (shuffledAnswersList == null) { return null; }
+        if (input <= 0) { var answerEdit = new AnswerCreateRequest("Please dont type 0 or less! Take one of the answers numbers above!");
+            return answerEdit; }
+        if (input > shuffledAnswersList.Count()) {
+            var answerEdit = new AnswerCreateRequest("Please choose one of the answers listed by the question above!");
+            return answerEdit; }
+        var answerR = new AnswerResponse(shuffledAnswersList[input-1]);
+        
+       
 
-        if (shuffledAnswersList==null) { return null; }
-        if (input <= 0) { return "PLs dont type 0! One of the answers numbers!"; }
-        if (input > shuffledAnswersList.Count()) { return "Pls choose one of the answers listed by the question!"; }
+        
+       
 
-        if (shuffledAnswersList[input-1].IsCorrectAnswer.Equals(true)) { return $"You choose {shuffledAnswersList[input-1].AnswerText}, You got it right!"; }
+        //if (shuffledAnswersList[input-1].IsCorrectAnswer.Equals(true)) { return $"You choose {shuffledAnswersList[input-1].AnswerText}, You got it right!"; }
 
-        return $"You choose {shuffledAnswersList[input-1].AnswerText},Sry wrong answer!";
-
+       // return $"You choose {shuffledAnswersList[input-1].AnswerText},Sry wrong answer!"; 
+        
+        return answerR;
+       
     }
     
 }
