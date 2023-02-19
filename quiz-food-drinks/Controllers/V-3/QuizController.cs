@@ -3,6 +3,7 @@ using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Services;
 using quiz_food_drinks.Models;
 using quiz_food_drinks.Services;
+using quiz_food_drinks.ViewModels.Answer.cs;
 
 namespace quiz_food_drinks.Controllers;
 
@@ -65,8 +66,9 @@ public class QuizController : ControllerBase
     /// ```
     /// GET
     /// {
-    /// "result":null,
-    /// "value": "You choose Southeast Asia, You got it right!"
+    /// "questionId": "00000000-0000-0000-0000-000000000000",
+    /// "answerText": "Corn",
+    /// "isCorrectAnswer": false
     /// }
     /// ```
     /// </remarks>
@@ -75,10 +77,10 @@ public class QuizController : ControllerBase
     [HttpGet("{input}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<string>>? Check(int input) {
+    public async Task<ActionResult<AnswerBase>> Check(int input) {
 
-        var checker = _quizService.getTrue(input);
-        if (checker is null) { return NotFound("Get a Quiz first!"); }
+        var checker = await _quizService.getTrue(input);
+        if (checker == null) { return NotFound("Get a Quiz first!"); }
         return Ok(checker);
         
 
