@@ -15,16 +15,14 @@ namespace quiz_food_drinks.Services;
 			_answerRepository = answerRepository;
 		}
 
-
 		public async Task<List<Answer>> AllAnswers()
 		{
 			return await _answerRepository.GetAnswersAsync();
 		}
 
-		public async Task<List<Answer?>> Get(Guid id) {
-
+		public async Task<List<Answer?>> Get(Guid id)
+		{
 			return await _answerRepository.GetAnswers(id);
-
 		}
 
 		public async Task<Answer?> AddAnswer(AnswerCreateRequest answer)
@@ -49,18 +47,15 @@ namespace quiz_food_drinks.Services;
 			return null;
 		}
 
-	public async Task<Answer> DeleteAnswer(Guid id) {
-		return await _answerRepository.Delete(id);
-	}
+		public async Task<Answer?> DeleteAnswer(Guid id)
+		{
+			return await _answerRepository.Delete(id);
+		}
 
-	public async Task<Answer?> EditAnswer(AnswerEditRequest answer) {
-
-		return await _answerRepository.EditAnswer(answer);
-
-	}
-
-
-
+		public async Task<Answer?> EditAnswer(AnswerEditRequest answer)
+		{
+			return await _answerRepository.EditAnswer(answer);
+		}
 
 	}
 

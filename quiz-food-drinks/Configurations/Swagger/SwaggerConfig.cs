@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 //using quiz_food_drinks.Configurations.SwaggerSchema;
@@ -8,7 +7,6 @@ namespace quiz_food_drinks.Configurations.Swagger
 {
 	public static class SwaggerConfig
 	{
-
 		public static IServiceCollection AddSwaggerConfigurations(this IServiceCollection service)
 		{
             service.AddEndpointsApiExplorer();
@@ -25,30 +23,25 @@ namespace quiz_food_drinks.Configurations.Swagger
                 options.SwaggerDoc("answer", V1);
                 options.SwaggerDoc("question_Trivia", V2);
                 options.SwaggerDoc("quiz", V3);
-
-
                 options.IncludeXmlComments(PathToXMLComments);
-               // options.SchemaFilter<SwaggerSchemaExampleFIlter>();
+                // options.SchemaFilter<SwaggerSchemaExampleFIlter>();
                 options.EnableAnnotations();
-
-
             });
 
-
             service.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-        });
-});
+            {
+                options.AddDefaultPolicy(
+                 builder =>
+                 {
+                    builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
 
-    return service;
+          return service;
 
-            }
+        }
 
 
         public static WebApplication UseSwaggerConfigurations(this WebApplication app)
@@ -69,9 +62,7 @@ namespace quiz_food_drinks.Configurations.Swagger
 
         static string PathToXMLComments => Path.Combine(AppContext.BaseDirectory, XmlFileNameFromExecutedAssembly);
 
-        static string XmlFileNameFromExecutedAssembly => $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
-
-
+        private static string XmlFileNameFromExecutedAssembly => $"{Assembly.GetEntryAssembly()?.GetName().Name}.xml";
 
         static OpenApiInfo V1 => new OpenApiInfo
         {
@@ -114,12 +105,6 @@ namespace quiz_food_drinks.Configurations.Swagger
             Name = "Please don't contact me",
             Email = "example@queenslab.se"
         };
-
-
-
-       
-
-
 
     }
 }

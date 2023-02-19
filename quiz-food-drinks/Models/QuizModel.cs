@@ -1,6 +1,3 @@
-using quiz_food_drinks.Entities;
-using quiz_food_drinks.ViewModels;
-
 namespace quiz_food_drinks.Models;
 
 public class QuizModel 
@@ -9,8 +6,7 @@ public class QuizModel
     
     public string Category { get; set; } = null!;
 
-   // public string TriviaId { get; set; } = null!;
-   public string Question { get; set; } = null!;
+    public string Question { get; set; } = null!;
 
     public List<string> Answers { get; set; } = null!;
     

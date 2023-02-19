@@ -11,5 +11,4 @@ public interface IQuestionRepository
     Task<Question?> UpdateAsync(QuestionUpdateRequest question);
     Task<Question?> DeleteAsync(Guid question);
     Task<bool> QuestionExists(Guid id);
-
 }

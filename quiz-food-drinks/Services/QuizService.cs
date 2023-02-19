@@ -1,11 +1,7 @@
-using System;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Repositories;
 using quiz_food_drinks.Interfaces.Services;
 using quiz_food_drinks.Models;
-using quiz_food_drinks.ViewModels;
 using quiz_food_drinks.ViewModels.Answer.cs;
 using quiz_food_drinks.ViewModels.Question.cs;
 
@@ -16,7 +12,7 @@ public class QuizService : IQuizService
     private readonly IQuestionService _questionService;
     private readonly IAnswerService _answerService;
     private readonly ITriviaRepository _triviaRepository;
-    private static List<Answer>? shuffledAnswersList;
+    private static List<Answer?>? shuffledAnswersList;
 
     public QuizService(IQuestionService questionService, IAnswerService answerService, ITriviaRepository triviaRepository)
     {
@@ -27,7 +23,7 @@ public class QuizService : IQuizService
 
     public async Task<QuizModel?> GetRandomQuiz()
     {
-        Random random = new Random();
+        Random random = new();
         int source = random.Next(2);
 
         if (source == 0)
@@ -44,7 +40,6 @@ public class QuizService : IQuizService
         return await GetSingleTrivia();
     }
 
-
     public async Task<QuizModel?> GetSingleTrivia()
     {
         QuizModel? quizModel = null;
@@ -57,40 +52,24 @@ public class QuizService : IQuizService
 
         foreach (var quiz in response)
         {
-            Guid triviaId = Guid.Parse(quiz.Id?.PadLeft(32, '0'));
+            Guid triviaId = Guid.Parse(quiz.Id.PadLeft(32, '0'));
 
             var question = await _questionService.GetQuestion(triviaId);
 
-            if (question != null)
-            {
-                quizModel = new QuizModel
-                {
-                    Id = question.Id,
-                    Question = question.QuestionString,
-                    Category = question.Category,
-                    Answers = new List<string>(),
-                };
-
-                await AddRandomizedAnswersList(quizModel, question);
-                return quizModel;
+             if (question != null)
+             {
+               return await CheckTriviaQuestionInDb(question, quizModel);
             }
-
+           
             SaveTriviaQuestion(response[0], triviaId);
             SaveCorrectTriviaAnswers(quiz, triviaId);
             SaveIncorrectTriviaAnswers(quiz.IncorrectAnswers, triviaId);
             var newQuestion = await _questionService.GetQuestion(triviaId);
+
             if (newQuestion != null)
             {
-                quizModel = new QuizModel
-                {
-                    Id = newQuestion.Id,
-                    Question = newQuestion.QuestionString,
-                    Category = newQuestion.Category,
-                    Answers = new List<string>(),
-                };
-
-                await AddRandomizedAnswersList(quizModel, newQuestion);
-                return quizModel;
+                QuizModel? newQuiz = await CheckTriviaQuestionInDb(newQuestion, null);
+                return newQuiz;
             }
             return null;
         }
@@ -99,12 +78,9 @@ public class QuizService : IQuizService
 
     }
 
-
-    private async Task<Question?> CheckTriviaQuestionInDb(Question? question)
+    private async Task<QuizModel?> CheckTriviaQuestionInDb(Question question, QuizModel? quizModel)
     {
-        if (question != null)
-        {
-            QuizModel quizModel = new QuizModel
+            quizModel = new QuizModel
             {
                 Id = question.Id,
                 Question = question.QuestionString,
@@ -113,24 +89,28 @@ public class QuizService : IQuizService
             };
 
             await AddRandomizedAnswersList(quizModel, question);
-        }
-
-        return question;
+            return quizModel;
     }
+
     private async void SaveTriviaQuestion(TriviaModel question, Guid triviaId)
     {
-        var triviaQuestion = new QuestionCreateRequest();
-        triviaQuestion.QuestionString = question.Question;
-        triviaQuestion.Category = question.Category;
-        triviaQuestion.Id = triviaId;
+        var triviaQuestion = new QuestionCreateRequest
+        {
+            QuestionString = question.Question,
+            Category = question.Category,
+            Id = triviaId
+        };
         await _questionService.AddQuestion(triviaQuestion);
     }
+
     private async void SaveCorrectTriviaAnswers(TriviaModel triviaQuestion, Guid triviaId)
     {
-        var answer = new AnswerCreateRequest();
-        answer.AnswerText = triviaQuestion.CorrectAnswer;
-        answer.IsCorrectAnswer = true;
-        answer.QuestionId = triviaId;
+        var answer = new AnswerCreateRequest
+        {
+            AnswerText = triviaQuestion.CorrectAnswer,
+            IsCorrectAnswer = true,
+            QuestionId = triviaId
+        };
         await _answerService.AddAnswer(answer);
     }
 
@@ -138,10 +118,12 @@ public class QuizService : IQuizService
     {
         foreach (var answerText in incorrectAnswers)
         {
-            var answer = new AnswerCreateRequest();
-            answer.AnswerText = answerText;
-            answer.IsCorrectAnswer = false;
-            answer.QuestionId = triviaId;
+            var answer = new AnswerCreateRequest
+            {
+                AnswerText = answerText,
+                IsCorrectAnswer = false,
+                QuestionId = triviaId
+            };
             await _answerService.AddAnswer(answer);
         }
     }
@@ -149,23 +131,14 @@ public class QuizService : IQuizService
     private async Task<QuizModel?> GetQuizFromDb()
     {
         var responseQuestion = await _questionService.GetRandomQuestion();
-
+        QuizModel? quizModel = null;
+        
         if (responseQuestion is null)
         {
             return null;
         }
 
-        QuizModel responseQuiz = new QuizModel
-        {
-            Id = responseQuestion.Id,
-            Question = responseQuestion.QuestionString,
-            Category = responseQuestion.Category,
-            Answers = new List<string>(),
-        };
-
-        await AddRandomizedAnswersList(responseQuiz, responseQuestion);
-
-        return responseQuiz;
+        return await CheckTriviaQuestionInDb(responseQuestion, quizModel);
     }
 
     public async Task<bool> CheckTriviaQuestionIdInDb(Guid id)
@@ -175,7 +148,7 @@ public class QuizService : IQuizService
 
     private async Task<List<Answer?>> AddRandomizedAnswersList(QuizModel responseQuiz, Question responseQuestion)
     {
-        Random random = new Random();
+        Random random = new();
         var filteredList = await _answerService.Get(responseQuestion.Id);
         shuffledAnswersList = filteredList.OrderBy(_ => random.Next()).ToList();
 
@@ -184,7 +157,6 @@ public class QuizService : IQuizService
          {    
              if (answer != null)
              {
-
                 responseQuiz.Answers.Add($"{counterN}." +answer.AnswerText);
              }
 
@@ -194,29 +166,16 @@ public class QuizService : IQuizService
          return shuffledAnswersList;
     }
 
-
-
-    public  async Task<AnswerBase> getTrue(int input)
+    public async Task<AnswerBase?> GetTrue(int input)
     {
         if (shuffledAnswersList == null) { return null; }
         if (input <= 0) { var answerEdit = new AnswerCreateRequest("Please dont type 0 or less! Take one of the answers numbers above!");
-            return answerEdit; }
-        if (input > shuffledAnswersList.Count()) {
+            return await Task.FromResult(answerEdit); }
+        if (input > shuffledAnswersList.Count) {
             var answerEdit = new AnswerCreateRequest("Please choose one of the answers listed by the question above!");
-            return answerEdit; }
-        var answerR = new AnswerResponse(shuffledAnswersList[input-1]);
+            return await Task.FromResult(answerEdit); }
+        var answerResponse = new AnswerResponse(shuffledAnswersList[input - 1]);
         
-       
-
-        
-       
-
-        //if (shuffledAnswersList[input-1].IsCorrectAnswer.Equals(true)) { return $"You choose {shuffledAnswersList[input-1].AnswerText}, You got it right!"; }
-
-       // return $"You choose {shuffledAnswersList[input-1].AnswerText},Sry wrong answer!"; 
-        
-        return answerR;
-       
-    }
-    
+        return answerResponse;      
+    }   
 }

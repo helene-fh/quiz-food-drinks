@@ -10,6 +10,10 @@ namespace quiz_food_drinks.ViewModels.Answer.cs;
 			base.AnswerText = answer.AnswerText;
 			base.IsCorrectAnswer = answer.IsCorrectAnswer;
 		}
-	}
+
+    public AnswerResponse(string answerText) : base(answerText)
+    {
+    }
+}
 
 

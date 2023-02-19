@@ -18,19 +18,4 @@ public class TriviaModel
 
     [JsonPropertyName("question")]
     public string Question { get; set; } = null!;
-
-    /*[JsonPropertyName("tags")]
-    public List<string> Tags { get; set; }
-    
-    [JsonPropertyName("type")]
-    public string Type { get; set; }
-    
-    [JsonPropertyName("difficulty")]
-    public string Difficulty { get; set; }
-    
-    [JsonPropertyName("regions")]
-    public List<object> Regions { get; set; }
-    
-    [JsonPropertyName("isNiche")]
-    public bool IsNiche { get; set; }*/
 }

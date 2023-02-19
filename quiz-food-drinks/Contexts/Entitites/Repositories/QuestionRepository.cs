@@ -25,7 +25,7 @@ internal class QuestionRepository : IQuestionRepository
 
     public async Task<Question?> GetAsync(Guid id)
     {
-        return _context.Questions.Where(x => x.Id == id).FirstOrDefault();
+        return await Task.FromResult(_context.Questions.Where(x => x.Id == id).FirstOrDefault());
     }
     
     public async Task<Question> AddAsync(Question question)
@@ -69,6 +69,5 @@ internal class QuestionRepository : IQuestionRepository
         var question = await GetAsync(id);
         return question != null;
     }
-
 
 }

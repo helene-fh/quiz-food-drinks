@@ -12,7 +12,7 @@ namespace quizfooddrinks.Migrations
 {
     [DbContext(typeof(QuizDatabaseContext))]
     [Migration("20221222181657_delete category")]
-    partial class deletecategory
+    partial class Deletecategory
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

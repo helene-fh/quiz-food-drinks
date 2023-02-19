@@ -17,7 +17,6 @@ namespace quiz_food_drinks.Controllers
     [Produces("application/json")]
     public class AnswerController : ControllerBase
     {
-
         private readonly IAnswerService _answerService;
 
         public AnswerController(IAnswerService answerService) {

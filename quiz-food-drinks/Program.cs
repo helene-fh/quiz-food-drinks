@@ -10,7 +10,7 @@ using quiz_food_drinks.Services;
 
 internal class Program
 {
-    public static async Task Main(string[] args)
+    public static Task Main(string[] args)
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         ConfigurationManager config = builder.Configuration;
@@ -26,6 +26,7 @@ internal class Program
         builder.Services.AddResponseCompression();
 
         RunWebApplication(builder);
+        return Task.CompletedTask;
     }
 
     static readonly Action<Microsoft.AspNetCore.Mvc.JsonOptions> SwaggerJsonOptionsUsingEnumAsString = (options) => {

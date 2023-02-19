@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using quiz_food_drinks.Interfaces.Entitites;
 using quiz_food_drinks.ViewModels;
 using Swashbuckle.AspNetCore.Annotations;
@@ -27,14 +26,11 @@ public class Answer : BaseEntity, IAnswer
 
     }
 
-
     public Answer(Guid questionId, string answerText, bool isCorrectAnswer)
     {
         QuestionId = questionId;
         AnswerText = answerText;
         IsCorrectAnswer = isCorrectAnswer;
     }
-
-
 
 }

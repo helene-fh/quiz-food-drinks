@@ -32,7 +32,7 @@ public class QuizDatabaseContext : DbContext
         CreateQuizModel(modelBuilder);
     }
 
-    private void CreateQuizModel(ModelBuilder modelBuilder)
+    private static void CreateQuizModel(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Answer>(entity =>
         {

@@ -51,10 +51,6 @@ public class QuestionController : ControllerBase
         return Ok(await _questionService.AddQuestion(question));
     }
 
-
-
-
-
     /// <summary>
     /// Get all Questions!
     /// </summary>
@@ -183,7 +179,7 @@ public class QuestionController : ControllerBase
         }
 
         await _questionService.GetQuestion(id);
-        
+
         if (question.QuestionId == id)
         {
             await _questionService.UpdateQuestion(question);

@@ -79,7 +79,7 @@ public class QuizController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<AnswerBase>> Check(int input) {
 
-        var checker = await _quizService.getTrue(input);
+        var checker = await _quizService.GetTrue(input);
         if (checker == null) { return NotFound("Get a Quiz first!"); }
         return Ok(checker);
         

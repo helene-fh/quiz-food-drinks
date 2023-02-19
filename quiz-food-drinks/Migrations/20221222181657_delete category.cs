@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace quizfooddrinks.Migrations
 {
     /// <inheritdoc />
-    public partial class deletecategory : Migration
+    public partial class Deletecategory : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
