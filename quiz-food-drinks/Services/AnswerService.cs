@@ -20,7 +20,7 @@ namespace quiz_food_drinks.Services;
 			return await _answerRepository.GetAnswersAsync();
 		}
 
-		public async Task<List<Answer?>> Get(Guid id)
+		public async Task<List<Answer>> Get(Guid id)
 		{
 			return await _answerRepository.GetAnswers(id);
 		}

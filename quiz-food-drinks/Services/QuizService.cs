@@ -150,7 +150,7 @@ public class QuizService : IQuizService
     {
         Random random = new();
         var filteredList = await _answerService.Get(responseQuestion.Id);
-        shuffledAnswersList = filteredList.OrderBy(_ => random.Next()).ToList();
+        shuffledAnswersList = filteredList.OrderBy(_ => random.Next()).ToList()!;
 
         var counterN = 1;
          foreach (var answer in shuffledAnswersList)

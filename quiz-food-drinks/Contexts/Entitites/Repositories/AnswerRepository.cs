@@ -20,7 +20,7 @@ namespace quiz_food_drinks.Contexts.Entitites.Repositories;
 			return await _context.Answers.ToListAsync();
 		}
 
-		public async Task<List<Answer?>> GetAnswers(Guid id)
+		public async Task<List<Answer>> GetAnswers(Guid id)
 		{
 			var answerData = _context.Answers.Where(y => y.QuestionId==id).ToList();
 			return await Task.FromResult(answerData);
