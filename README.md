@@ -14,7 +14,7 @@ We used Entity Framework Core 7, Sqlite, MVVM principle and with swagger for thi
 ## Game Instructions
 1. Press *"GET /api/quiz/Quiz"* under the **"Quiz"**, then press **"Try it out"** at the right side and **"Execute"** to get a quiz with an id, category, question and relative answers
 2. Make a guess from the list of answers
-3. To check if your answer is correct scroll down to the second *"GET /api/quiz/Quiz/{input}"*
+3. To check if your answer is correct scroll down to the second *"GET /api/quiz/Quiz/{answerInputId}"*
 4. Press **"Try it out"** and enter the **"number"** that is relative to the answer, then press **"Execute"**
 5. Check if the answer is true, then you guessed it right. If false, then its the wrong answer 
 6. Repeat the previous steps to keep the Quiz going
