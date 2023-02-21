@@ -56,7 +56,7 @@ namespace quiz_food_drinks.Controllers
 
 
         /// <summary>
-        /// Get all answers.
+        /// Get all answers
         /// </summary>
         /// <returns>A list of all the answers</returns>
         /// <remarks>
@@ -92,22 +92,44 @@ namespace quiz_food_drinks.Controllers
         }
 
         /// <summary>
-        /// Get Answer from id.
+        /// Get answers by question id
         /// </summary>
-        /// <param name="id">Answer id(Guid) to found answer!</param>
-        /// <returns>An Answer</returns>
+        /// <param name="id">Question id(Guid) to find relative answers!</param>
+        /// <returns>A list of answers</returns>
         /// <remarks>
         ///   **Sample request:**
-        ///    ``` {
-        ///         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        ///         "questionId": "6B29FC40-CA47-1067-B31D-00DD010662DA",
-        ///         "answerText": "Leia",
-        ///         "isCorrectAnswer": false
-        ///     }
+        ///    ```
+        ///         GET
+        ///         [
+        ///         {
+        ///         "questionId": "00000000-6271-6477-d5d4-87fbab6b795a",
+        ///          "answerText": "Italy",
+        ///          "isCorrectAnswer": true,
+        ///         "id": "c670a7ff-1af2-454b-86ab-c955318938d7"
+        ///         },
+        ///         {
+        ///          "questionId": "00000000-6271-6477-d5d4-87fbab6b795a",
+        ///          "answerText": "Ghana",
+        ///          "isCorrectAnswer": false,
+        ///          "id": "dcc475e6-b400-4d71-9017-3b11e7bd1cf1"
+        ///         },
+        ///         {
+        ///          "questionId": "00000000-6271-6477-d5d4-87fbab6b795a",
+        ///          "answerText": "Panama",
+        ///          "isCorrectAnswer": false,
+        ///          "id": "3f1cc1b7-c6bd-454e-9b4c-32ba4e066189"
+        ///          },
+        ///          {
+        ///          "questionId": "00000000-6271-6477-d5d4-87fbab6b795a",
+        ///          "answerText": "Nepal",
+        ///          "isCorrectAnswer": false,
+        ///          "id": "075660aa-f370-47a2-b15d-27de60eb0641"
+        ///          }
+        ///         ]
         ///     ```
         /// </remarks>
-        /// <response code="200">Returns an answer</response>
-        /// <response code="404">Invalid id</response>
+        /// <response code="200">Success! Returns a list of answer</response>
+        /// <response code="404">Error 404! Invalid id</response>
         [HttpGet("{id}")] 
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -130,7 +152,8 @@ namespace quiz_food_drinks.Controllers
         /// <remarks>
         ///
         /// **Sample request:**
-        /// ```  
+        /// ``` 
+        ///     PUT /Todo
         ///    {
         ///       "questionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         ///       "answerText": "new updated text",
@@ -158,23 +181,26 @@ namespace quiz_food_drinks.Controllers
         }
 
         /// <summary>
-        /// Delete an answer
+        /// Delete an answer by id
         /// </summary>
         /// <param name="id">Answer id(Guid) to be deleted!</param>
         /// <returns>deleted answer</returns>
         /// <remarks>
         ///**Sample request:**
-        ///```{
-        ///   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        ///   "questionId": "6B29FC40-CA47-1067-B31D-00DD010662DA",
-        ///   "answerText": "Luke",
-        ///   "isCorrectAnswer": false
-        /// }``
-    ///
-    /// </remarks>
-    /// <response code="200">Success, deleted answer</response>
-    /// <response code="404">Invalid id</response>
-    [HttpDelete("{id}")]
+        ///```
+        ///  DELETE /Todo
+        /// {
+        ///   "questionId": "00000000-6271-6477-d5d4-87fbab6b795a",
+        ///   "answerText": "Nepal",
+        ///   "isCorrectAnswer": false,
+        ///   "id": "075660aa-f370-47a2-b15d-27de60eb0641"
+        /// }
+        /// ```
+        ///
+        /// </remarks>
+        /// <response code="200">Success, deleted answer</response>
+        /// <response code="404">Error 404,Invalid id</response>
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Answer>> Delete(Guid id)
@@ -184,7 +210,7 @@ namespace quiz_food_drinks.Controllers
             if (deleteAnswer!=null) {
                 return Ok(deleteAnswer);
             }
-            return NotFound("Check the id");
+            return NotFound("Invalid id");
 
         }
     }

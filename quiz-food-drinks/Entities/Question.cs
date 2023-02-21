@@ -7,9 +7,9 @@ namespace quiz_food_drinks.Entities;
 public class Question : BaseEntity, IQuestion
 {
 
-    [DefaultValue("Who counts as a sith-lord?")]
+    [DefaultValue("Which familiar carbonated soft drink contains quinine?")]
     public string QuestionString { get; set; } = null!;
-    [DefaultValue("Star Wars")]
+    [DefaultValue("Food & Drink")]
     public string Category { get; set; } = null!;
 
 

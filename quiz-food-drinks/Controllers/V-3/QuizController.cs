@@ -22,6 +22,7 @@ public class QuizController : ControllerBase
         _answerService = answerService;
     }
 
+
     /// <summary>
     /// Get random question from Triva
     /// </summary>
@@ -32,14 +33,14 @@ public class QuizController : ControllerBase
     /// GET
     ///  {
     ///     "id": "00000000-624a-b0de-348a-461bfc6706a1",
-    ///     "question": "From which part of the world do bananas originate?",
+    ///      "category": "Food &amp; Drink",
+    ///     "question": "Which bean is used to produce a tin of baked beans?",
     ///     "answers": [
-    ///     "1. North America",
-    ///     "2. Central Asia",
-    ///     "3. Europe",
-    ///     "4. Southeast Asia"
-    ///                 ],
-    ///     "category": "Food, Drink" 
+    ///     "1.Butter",
+    ///     "2.Canelini",
+    ///     "3.Berlotti",
+    ///     "4.Haricot "
+    ///     ]
     ///  }    
     /// ```
     /// </remarks>
@@ -57,7 +58,7 @@ public class QuizController : ControllerBase
     }
 
     /// <summary>
-    /// Check if your guessed answer is correct!
+    /// Check if your guessed answer is correct
     /// </summary>
     /// <param name="input">Enter one of the listed answers number (int)</param>
     /// <returns>String line with either right or wrong answer!</returns>

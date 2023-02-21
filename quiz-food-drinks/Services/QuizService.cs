@@ -174,7 +174,7 @@ public class QuizService : IQuizService
         if (input > shuffledAnswersList.Count) {
             var answerEdit = new AnswerCreateRequest("Please choose one of the answers listed by the question above!");
             return await Task.FromResult(answerEdit); }
-        var answerResponse = new AnswerResponse(shuffledAnswersList[input - 1]);
+        var answerResponse = new AnswerResponse(shuffledAnswersList[input - 1]!);
         
         return answerResponse;      
     }   

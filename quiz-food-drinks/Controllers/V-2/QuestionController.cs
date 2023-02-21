@@ -30,7 +30,7 @@ public class QuestionController : ControllerBase
     ///```
     /// POST /Todo
     /// {
-    ///     "questionText": "string",
+    ///     "questionString": "string",
     ///     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     ///     "category": "string"
     /// }
@@ -51,8 +51,10 @@ public class QuestionController : ControllerBase
         return Ok(await _questionService.AddQuestion(question));
     }
 
+
+
     /// <summary>
-    /// Get all Questions!
+    /// Get all Questions
     /// </summary>
     /// <returns>All Questions</returns>
     /// <remarks>
@@ -61,20 +63,20 @@ public class QuestionController : ControllerBase
     /// GET
     /// [
     /// {
-    ///   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    ///   "questionText": "Some random question",
-    ///   "category": "Some category"
+    ///   "questionString": "Which familiar carbonated soft drink contains quinine?",
+    ///   "category": "Food &amp; Drink",
+    ///   "id": "00000000-622a-1c36-7cc5-9eab6f950252"
     /// },
     /// {
-    ///   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    ///   "questionText": "Some random question",
-    ///   "category": "Some category"
+    ///   "questionString": "In which country is grappa a popular drink?",
+    ///   "category": "Food &amp; Drink",
+    ///   "id": "00000000-6271-6477-d5d4-87fbab6b795a"
     /// },
     /// ]
     /// ```
     /// </remarks>
-    /// <response code="200">Get all Questions!</response>
-    /// <response code="400">Bad request!</response>
+    /// <response code="200">Success! Get all Questions!</response>
+    /// <response code="400">Error 400! Bad request!</response>
     [HttpGet(Name ="GetAllQuestions")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -85,6 +87,8 @@ public class QuestionController : ControllerBase
         return BadRequest();
     }
 
+
+
     /// <summary>
     /// Get question by id
     /// </summary>
@@ -94,15 +98,15 @@ public class QuestionController : ControllerBase
     ///   ```
     ///     GET
     ///     {
-    ///   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    ///   "questionText": "Some random question",
-    ///   "category": "Some category"
+    ///   "questionString": "Traditionally what type of meat is used to make a mousakka?",
+    ///   "category": "Food &amp; Drink",
+    ///   "id": "00000000-622a-1c36-7cc5-9eab6f9502da"
     ///     }
     ///```
     /// </remarks>
-    /// <response code="200">You get the question</response>
-    /// <response code="404">Invalid id</response>
-    /// <param name="id">Question id(Guid) to found question</param>
+    /// <response code="200">Success! You get the question</response>
+    /// <response code="404">Error 404! Invalid id</response>
+    /// <param name="id">Question id(Guid) to find question</param>
     [HttpGet("{id}",Name ="GetQuestionById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -117,6 +121,8 @@ public class QuestionController : ControllerBase
         return Ok(question);
     }
 
+
+
     /// <summary>
     /// Get a random question
     /// </summary>
@@ -127,14 +133,14 @@ public class QuestionController : ControllerBase
     /// ```
     /// GET
     /// {
-    ///     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    ///     "questionText": "Who counts as a sith-lord?",
-    ///     "category": "Star Wars"
+    ///     "questionString": "Masala Dosa is a dish that is most associated with which part of the world?",
+    ///     "category": "Food &amp; Drink",
+    ///     "id": "00000000-624c-609f-50d1-a5e051325a68"
     /// }
     /// ```
     /// </remarks>
-    /// <response code="200">Success, gets a random question</response>
-    /// <response code="404">Failed, Not Found try again!</response>
+    /// <response code="200">Success! get a random question</response>
+    /// <response code="404">Error 404! Not Found!</response>
     [HttpGet]
     [Route("api/[controller]/Random")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -148,6 +154,8 @@ public class QuestionController : ControllerBase
     }
 
 
+
+
     /// <summary>
     /// Update a question by id
     /// </summary>
@@ -158,16 +166,17 @@ public class QuestionController : ControllerBase
     ///   ```
     ///   PUT /Todo
     ///   {
-    ///     "questionText": "string",
-    ///     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    ///     "category": "string",
-    ///     "questionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    ///     "questionId": "00000000-622a-1c36-7cc5-9eab6f950252",
+    ///     "questionString": "Yolo",
+    ///     "id": "00000000-622a-1c36-7cc5-9eab6f950252",
+    ///     "category": "Food &amp; Drinks"
     ///   }
     ///   ```
     ///</remarks>
     /// <response code="200">Success, updated question</response>
     /// <response code="400">Error 400, check inputs and id(Guid)</response>
     /// <param name="id">id(Guid) of the Question to update</param>
+    /// <param name="question">Updated question example</param>
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -187,7 +196,9 @@ public class QuestionController : ControllerBase
         return Ok(question);
     }
 
-    
+
+
+
 
     /// <summary>
     /// Delete by id
@@ -198,16 +209,16 @@ public class QuestionController : ControllerBase
     ///```
     /// DELETE /Todo
     /// {
-    /// "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    /// "questionText": "Who counts as a sith-lord?",
-    /// "category": "Star Wars"
+    /// "questionString": "Yolo",
+    /// "category": "Food &amp; Drinks",
+    /// "id": "00000000-622a-1c36-7cc5-9eab6f950252"
     /// }
     /// ```
     ///</remarks>
     /// <response code="200">Success, deleted the question</response>
-    /// <response code="404">Invalid id</response>
+    /// <response code="404">Error 404! Invalid id</response>
     /// <param name="id">Question id(Guid) to delete question</param>
-[HttpDelete("{id}")]
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Question>> DeleteQuestion(Guid id)

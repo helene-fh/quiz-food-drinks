@@ -13,7 +13,7 @@ public class Answer : BaseEntity, IAnswer
 
     [SwaggerSchema(Description = "Some text")]
 
-    [DefaultValue("Yoda")]
+    [DefaultValue("Nepal")]
     public string AnswerText { get; set; } = null!;
 
     [SwaggerSchema(Description = "true or false")]
