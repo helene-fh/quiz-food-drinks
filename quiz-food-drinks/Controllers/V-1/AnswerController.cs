@@ -23,7 +23,6 @@ namespace quiz_food_drinks.Controllers
             _answerService = answerService;
         }
 
-
         /// <summary>
         /// Add a new answer to a Question(id)
         /// </summary>
@@ -50,10 +49,9 @@ namespace quiz_food_drinks.Controllers
             {
                 return NotFound("Invalid id");
             }
+
             return Ok(await _answerService.AddAnswer(answer));
         }
-
-
 
         /// <summary>
         /// Get all answers
@@ -88,6 +86,7 @@ namespace quiz_food_drinks.Controllers
         {
             var answer = await _answerService.AllAnswers();
             if (answer==null) { return BadRequest(); }
+
             return Ok(answer);
         }
 
@@ -138,11 +137,10 @@ namespace quiz_food_drinks.Controllers
         {
             var answers = await _answerService.Get(id);
             if (answers is null) { return NotFound("Invalid id"); }
+
             return Ok(answers);
         }
-
-        
-
+   
         /// <summary>
         /// Update an answer by id
         /// </summary>
@@ -167,7 +165,7 @@ namespace quiz_food_drinks.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Answer>>Put(AnswerEditRequest answer, Guid id)
+        public async Task<ActionResult<Answer>>Put(AnswerUpdateRequest answer, Guid id)
         {
             if (id!=answer.AnswerId) {
                 return BadRequest();
@@ -176,8 +174,8 @@ namespace quiz_food_drinks.Controllers
             if (answer.AnswerId==id) {
                 await _answerService.EditAnswer(answer);
             }
-            return Ok(answer);
 
+            return Ok(answer);
         }
 
         /// <summary>
@@ -204,14 +202,13 @@ namespace quiz_food_drinks.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Answer>> Delete(Guid id)
-        {
-            
+        {    
             var deleteAnswer = await _answerService.DeleteAnswer(id);
             if (deleteAnswer!=null) {
                 return Ok(deleteAnswer);
             }
-            return NotFound("Invalid id");
 
+            return NotFound("Invalid id");
         }
     }
 }

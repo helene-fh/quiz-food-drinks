@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
-//using quiz_food_drinks.Configurations.SwaggerSchema;
 
 namespace quiz_food_drinks.Configurations.Swagger
 {
@@ -24,7 +23,6 @@ namespace quiz_food_drinks.Configurations.Swagger
                 options.SwaggerDoc("question_Trivia", V2);
                 options.SwaggerDoc("quiz", V3);
                 options.IncludeXmlComments(PathToXMLComments);
-                // options.SchemaFilter<SwaggerSchemaExampleFIlter>();
                 options.EnableAnnotations();
             });
 

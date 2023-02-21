@@ -52,7 +52,7 @@ namespace quiz_food_drinks.Services;
 			return await _answerRepository.Delete(id);
 		}
 
-		public async Task<Answer?> EditAnswer(AnswerEditRequest answer)
+		public async Task<Answer?> EditAnswer(AnswerUpdateRequest answer)
 		{
 			return await _answerRepository.EditAnswer(answer);
 		}

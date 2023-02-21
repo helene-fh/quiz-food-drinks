@@ -6,7 +6,7 @@ public class QuestionResponse : QuestionBase
 {
     public QuestionResponse(IQuestion question) : base()
     {
-        base.QuestionString = question.QuestionString;
-        base.Category = question.Category;
+        QuestionString = question.QuestionString;
+        Category = question.Category;
     }
 }

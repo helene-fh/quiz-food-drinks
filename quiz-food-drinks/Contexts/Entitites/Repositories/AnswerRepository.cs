@@ -55,7 +55,7 @@ namespace quiz_food_drinks.Contexts.Entitites.Repositories;
 		}
 
 
-		public async Task<Answer?> EditAnswer(AnswerEditRequest answer) {
+		public async Task<Answer?> EditAnswer(AnswerUpdateRequest answer) {
 
 			var answerToEdit = _context.Answers.Where(x => x.Id == answer.AnswerId).FirstOrDefault();
 		
@@ -68,7 +68,6 @@ namespace quiz_food_drinks.Contexts.Entitites.Repositories;
 			}
 			
 			return answerToEdit;
-		
 		}
 	
 	}

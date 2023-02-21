@@ -6,5 +6,5 @@ namespace quiz_food_drinks.Interfaces.Services;
 public interface IQuizService
 {
     Task<QuizModel?> GetRandomQuiz();
-    Task<AnswerBase?> GetTrue(int input);
+    Task<AnswerBase?> GetTrue(int answerInputId);
 }

@@ -1,5 +1,4 @@
-﻿using System;
-namespace quiz_food_drinks.ViewModels.Answer.cs;
+﻿namespace quiz_food_drinks.ViewModels.Answer.cs;
 
 	public class AnswerCreateRequest : AnswerBase
 	{
@@ -9,8 +8,7 @@ namespace quiz_food_drinks.ViewModels.Answer.cs;
 
 		public AnswerCreateRequest(string answerText) : base(answerText)
 		{
-		}
-		
+		}		
 	}
 
 

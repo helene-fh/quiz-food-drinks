@@ -166,15 +166,15 @@ public class QuizService : IQuizService
          return shuffledAnswersList;
     }
 
-    public async Task<AnswerBase?> GetTrue(int input)
+    public async Task<AnswerBase?> GetTrue(int answerInputId)
     {
         if (shuffledAnswersList == null) { return null; }
-        if (input <= 0) { var answerEdit = new AnswerCreateRequest("Please dont type 0 or less! Take one of the answers numbers above!");
+        if (answerInputId <= 0) { var answerEdit = new AnswerCreateRequest("Please dont type 0 or less! Take one of the answers numbers above!");
             return await Task.FromResult(answerEdit); }
-        if (input > shuffledAnswersList.Count) {
+        if (answerInputId > shuffledAnswersList.Count) {
             var answerEdit = new AnswerCreateRequest("Please choose one of the answers listed by the question above!");
             return await Task.FromResult(answerEdit); }
-        var answerResponse = new AnswerResponse(shuffledAnswersList[input - 1]!);
+        var answerResponse = new AnswerResponse(shuffledAnswersList[answerInputId - 1]!);
         
         return answerResponse;      
     }   

@@ -51,8 +51,6 @@ public class QuestionController : ControllerBase
         return Ok(await _questionService.AddQuestion(question));
     }
 
-
-
     /// <summary>
     /// Get all Questions
     /// </summary>
@@ -84,10 +82,9 @@ public class QuestionController : ControllerBase
     {
         var question = await _questionService.AllQuestions();
         if (question!=null) {return Ok(question); }
+
         return BadRequest();
     }
-
-
 
     /// <summary>
     /// Get question by id
@@ -118,10 +115,9 @@ public class QuestionController : ControllerBase
         {
             return NotFound("Invalid id");
         }
+
         return Ok(question);
     }
-
-
 
     /// <summary>
     /// Get a random question
@@ -149,12 +145,9 @@ public class QuestionController : ControllerBase
     {
         var question = await _questionService.GetRandomQuestion();
         if (question == null) { return NotFound("E404,Not Found"); }
+
         return Ok(question);
-
     }
-
-
-
 
     /// <summary>
     /// Update a question by id
@@ -193,12 +186,9 @@ public class QuestionController : ControllerBase
         {
             await _questionService.UpdateQuestion(question);
         }
+
         return Ok(question);
     }
-
-
-
-
 
     /// <summary>
     /// Delete by id
@@ -232,5 +222,4 @@ public class QuestionController : ControllerBase
 
         return Ok(question);
     }
-
 }

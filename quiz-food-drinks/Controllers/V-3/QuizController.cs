@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using quiz_food_drinks.Entities;
 using quiz_food_drinks.Interfaces.Services;
-using quiz_food_drinks.Models;
-using quiz_food_drinks.Services;
 using quiz_food_drinks.ViewModels.Answer.cs;
 
 namespace quiz_food_drinks.Controllers;
@@ -21,7 +18,6 @@ public class QuizController : ControllerBase
         _quizService = quizService;
         _answerService = answerService;
     }
-
 
     /// <summary>
     /// Get random question from Triva
@@ -54,13 +50,14 @@ public class QuizController : ControllerBase
     {
         var triviaData = _quizService.GetRandomQuiz();
         if (triviaData == null) { return NoContent(); }
+
         return Ok(await triviaData);
     }
 
     /// <summary>
     /// Check if your guessed answer is correct
     /// </summary>
-    /// <param name="input">Enter one of the listed answers number (int)</param>
+    /// <param name="answerInputId">Enter one of the listed answers number (int)</param>
     /// <returns>String line with either right or wrong answer!</returns>
     /// <remarks>
     /// **Sample request:**
@@ -75,18 +72,15 @@ public class QuizController : ControllerBase
     /// </remarks>
     /// /// <response code="200">Success,you get a correct or incorrect answer!</response>
     /// <response code="404">Get a Quiz before answering!</response>
-    [HttpGet("{input}")]
+    [HttpGet("{answerInputId}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<AnswerBase>> Check(int input) {
+    public async Task<ActionResult<AnswerBase>> Check(int answerInputId) {
 
-        var checker = await _quizService.GetTrue(input);
+        var checker = await _quizService.GetTrue(answerInputId);
         if (checker == null) { return NotFound("Get a Quiz first!"); }
-        return Ok(checker);
-        
 
+        return Ok(checker);   
     }
-
-
 }
 
