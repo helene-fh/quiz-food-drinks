@@ -3,3 +3,6 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+/global.json
+/identifier.sqlite
+/quiz-food-drinks.sln.DotSettings.user
