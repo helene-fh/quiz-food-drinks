@@ -1,14 +1,14 @@
 # Quiz-food-drinks-Backend  
 ## MADE BY HELENE AND VINCENT
 ## Description
-Get a random question from our API, that gets a question from the Trivia API or from our database. If a question from Trivia isnt in our database it will be added.
+Get a random question from our API, the question will either come from Trivia API or from our database. If a question from Trivia isnt in our database it will be added.
 We used Entity Framework Core 7, Sqlite, MVVM principle and with swagger for this project and it is coded in C#.
 
 ## Instructions
 1. Clone the project down to your pc or mac
 2. Install dotnet ef CLI [Link](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
 3. Enter this in the CLI `dotnet ef migrations add InitialCreate` to get migrations, if they are missing
-4. Enter this aswell in the CLI `dotnet ef database update` to make up a database named **QuizSqlLight.db** if it is missing
+4. Enter `dotnet ef database update` in the CLI to create a database named **QuizSqlLight.db** (if it is missing)
 5. Launch Swagger in the browser by starting the project.
 
 ## Game Instructions
